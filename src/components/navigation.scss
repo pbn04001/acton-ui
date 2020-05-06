@@ -1,0 +1,12 @@
+.navigation {
+  flex: 0 0 140px;
+
+  &__link {
+    display: block;
+
+    &--active {
+      color: white;
+    }
+  }
+}
+
