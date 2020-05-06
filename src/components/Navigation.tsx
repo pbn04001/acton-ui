@@ -1,16 +1,16 @@
+// @ts-nocheck
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import './navigation.scss'
 
-export default function Navigation() {
-
-  let [navigation, setNavigation] = useState("/")
+const Navigation: React.FC = () => {
+  const [navigation, setNavigation] = useState('/')
 
   useEffect(() => {
     const messageReceived = (message) => {
       if (message.data.currentPage) {
-        setNavigation(message.data.currentPage);
+        setNavigation(message.data.currentPage)
       }
     }
     // set resize listener
@@ -27,18 +27,24 @@ export default function Navigation() {
     <div className="navigation">
       <Link
         to="/"
-        className={"navigation__link " + (navigation === '/' ? 'navigation__link--active' : '') }
-        onClick={() => { setNavigation('/') }}
+        className={'navigation__link ' + (navigation === '/' ? 'navigation__link--active' : '')}
+        onClick={() => {
+          setNavigation('/')
+        }}
       >
         Dashboard
       </Link>
       <Link
         to="/landing-pages"
-        className={"navigation__link " + (navigation === '/landing-pages' ? 'navigation__link--active' : '') }
-        onClick={() => { setNavigation('/landing-pages') }}
+        className={'navigation__link ' + (navigation === '/landing-pages' ? 'navigation__link--active' : '')}
+        onClick={() => {
+          setNavigation('/landing-pages')
+        }}
       >
         Landing Pages
       </Link>
     </div>
   )
 }
+
+export default Navigation

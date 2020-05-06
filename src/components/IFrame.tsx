@@ -1,10 +1,11 @@
+// @ts-nocheck
 import React, { useEffect, useRef, useState } from 'react'
 
 import './iframe.scss'
 
-export const getHeight = () => window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+export const getHeight = (): number => window.innerHeight
 
-type IframeProps = {
+interface IframeProps {
   src: string
 }
 
@@ -25,15 +26,13 @@ const IFrame: React.FC<IframeProps> = (props: IframeProps) => {
     }
   }, [])
 
-  const iframeRef = useRef<HTMLIFrameElement>(null)
+  const iframeRef = useRef<HTMLIFrameElement | null>(null)
 
   useEffect(() => {
     if (iframeRef?.current) {
       iframeRef.current.style.height = `${height}px`
     }
   }, [height])
-
-  console.log("Src:", props.src)
 
   return <iframe className="iframe" frameBorder="0" ref={iframeRef} src={props.src}></iframe>
 }

@@ -1,9 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Navigation from './Navigation'
-
-import Home from "../views/Home"
-import LandingPages from "../views/LandingPages"
+import IFrame from './IFrame'
 
 import './app.scss'
 
@@ -13,10 +11,10 @@ export default function App() {
       <Navigation />
       <Switch>
         <Route path="/landing-pages">
-          <LandingPages />
+          <IFrame src="//localhost/acton/ng-ui/landingPageLists" />
         </Route>
         <Route path="/">
-          <Home />
+          <IFrame src="//localhost/acton/ng-ui/dashboard" />
         </Route>
       </Switch>
     </Router>
