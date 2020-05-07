@@ -27,6 +27,7 @@ const config: webpack.Configuration = {
   },
   plugins: [htmlPlugin],
   devServer: {
+    openPage: 'actonui/',
     publicPath: '/actonui/',
     historyApiFallback: true,
     inline: true,
