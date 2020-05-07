@@ -34,7 +34,7 @@ const Navigation: React.FC<accountSettings> = (props) => {
     <div className="navigation">
       <Link
         to={`${rootContext}/`}
-        className={'navigation__link ' + (navigation === `${rootContext}/` ? 'navigation__link--active' : '')}
+        className={'navigation__link ' + (navigation === `${rootContext}/dashboard` ? 'navigation__link--active' : '')}
         onClick={() => {
           setNavigation(`${rootContext}/`)
         }}
@@ -42,10 +42,10 @@ const Navigation: React.FC<accountSettings> = (props) => {
         Start
       </Link>
       <Link
-        to={`${rootContext}/landing-pages`}
-        className={'navigation__link ' + (navigation === `${rootContext}/landing-pages` ? 'navigation__link--active' : '')}
+        to={`${rootContext}/landingPageLists`}
+        className={'navigation__link ' + (navigation === `${rootContext}/landingPageLists` ? 'navigation__link--active' : '')}
         onClick={() => {
-          setNavigation(`${rootContext}/landing-pages`)
+          setNavigation(`${rootContext}/landingPageLists`)
         }}
       >
         Landing Pages

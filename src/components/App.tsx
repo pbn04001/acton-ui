@@ -18,7 +18,7 @@ export default function App() {
           setAccountSettings(result)
         },
         () => {
-          window.location.href = '//localhost/acton/account/login.jsp'
+          //window.location.href = '//localhost/acton/account/login.jsp'
         }
       )
   }, [])
@@ -35,7 +35,7 @@ export default function App() {
           </Route>
         </Switch>
       </Router>
-      <IFrame id="root-iframe" src={`/acton/ng-ui/${getInternalAddressFromCurrent(accountSettings, window.location.pathname)}`} />
+      <IFrame id="root-iframe" src={`/acton/ng-ui/${getInternalAddressFromCurrent(accountSettings, window.location.pathname)}?actonUIFrame=true`} />
     </>
   )
 }

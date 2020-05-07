@@ -5,12 +5,10 @@ import { useHistory } from 'react-router-dom'
 
 export const getInternalAddressFromCurrent = (accountSettings, currentLocation) => {
   switch (currentLocation) {
-    case `${rootContext}/landing-pages`:
-      return 'landingPageLists'
     case `${rootContext}/`:
       return accountSettings.isMicrosoftStartPage ? 'microsoftStart' : 'dashboard'
     default:
-      return '404'
+      return currentLocation.split(`${rootContext}/`)[1];
   }
 }
 
