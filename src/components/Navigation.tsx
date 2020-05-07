@@ -14,7 +14,6 @@ const Navigation: React.FC<accountSettings> = (props) => {
   useEffect(() => {
     const messageReceived = (message) => {
       if (message.data && message.data.actonCurrentPage) {
-        debugger
         window.history.replaceState('', `Act-On :: ${message.data.title}`, rootContext + message.data.actonCurrentPage);
         document.title = `Act-On :: ${message.data.title}`
         setNavigation(rootContext + message.data.actonCurrentPage)
