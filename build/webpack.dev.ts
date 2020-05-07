@@ -25,7 +25,16 @@ const config: webpack.Configuration = {
       ...rules
     ]
   },
-  plugins: [htmlPlugin]
+  plugins: [htmlPlugin],
+  devServer: {
+    port: 8081,
+    proxy: {
+      '/acton' : {
+        target: 'http://localhost',
+      }
+
+    }
+  }
 }
 
 export default config

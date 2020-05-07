@@ -6,6 +6,7 @@ import './iframe.scss'
 export const getHeight = (): number => window.innerHeight
 
 interface IframeProps {
+  id: string
   src: string
 }
 
@@ -34,7 +35,7 @@ const IFrame: React.FC<IframeProps> = (props: IframeProps) => {
     }
   }, [height])
 
-  return <iframe className="iframe" frameBorder="0" ref={iframeRef} src={props.src}></iframe>
+  return <iframe id={props.id} className="iframe" frameBorder="0" ref={iframeRef} src={props.src}></iframe>
 }
 
 export default IFrame

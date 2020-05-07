@@ -9,8 +9,8 @@ const Navigation: React.FC = () => {
 
   useEffect(() => {
     const messageReceived = (message) => {
-      if (message.data.currentPage) {
-        setNavigation(message.data.currentPage)
+      if (message.data && message.data.actonCurrentPage) {
+        setNavigation(message.data.actonCurrentPage)
       }
     }
     // set resize listener
