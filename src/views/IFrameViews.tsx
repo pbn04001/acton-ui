@@ -4,46 +4,30 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import IFrame from '../components/IFrame'
 
-const getInternalAddressFromCurrent = (currentLocation) => {
+export const getInternalAddressFromCurrent = (currentLocation) => {
   switch (currentLocation) {
     case '/landing-pages':
-      return {
-        url: '/acton/ng-ui/landingPageLists',
-        click: 'navLandingPageListsLink'
-      }
-    case '/':``
-      return {
-        url: '/acton/ng-ui/dashboard',
-        click: 'navDashboardLink'
-      }
+      return 'landingPageLists'
+    case '/':
+      return 'dashboard'
     default:
-      return {
-        url: '/acton/ng-ui/dashboard',
-        click: 'navDashboardLink'
-      }
+      return 'dashboard'
   }
 }
 
 const IFrameViews: React.FC = () => {
   const history = useHistory()
-  const [location, setLocation] = useState(getInternalAddressFromCurrent(window.location.pathname))
-
-  const initialLocation = `${location.url}`
-
-  useEffect(() => {
-    const iframe:HTMLIFrameElement | null = document.getElementById('root-iframe');
-    if (iframe != null) {
-      iframe.contentWindow.postMessage({ actonNavigateClick: location.click }, '*')
-    }
-  }, [location])
 
   useEffect(() => {
     return history.listen((location) => {
-      setLocation(getInternalAddressFromCurrent(location.pathname))
+      const iframe: HTMLIFrameElement | null = document.getElementById('root-iframe')
+      if (iframe != null) {
+        iframe.contentWindow.postMessage({ actonNavigate: getInternalAddressFromCurrent(location.pathname) }, '*')
+      }
     })
   }, [history])
 
-  return <IFrame id="root-iframe" src={initialLocation} />
+  return null;
 }
 
 export default IFrameViews
