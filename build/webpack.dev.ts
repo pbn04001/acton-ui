@@ -27,6 +27,8 @@ const config: webpack.Configuration = {
   },
   plugins: [htmlPlugin],
   devServer: {
+    historyApiFallback: true,
+    inline: true,
     port: 8081,
     proxy: {
       '/acton' : {

@@ -30,7 +30,7 @@ export default function App() {
       <Router>
         <Navigation accountSettings={accountSettings} />
         <Switch>
-          <Route path="/">
+          <Route path="*">
             <IFrameViews accountSettings={accountSettings} />
           </Route>
         </Switch>

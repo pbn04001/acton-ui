@@ -10,7 +10,7 @@ export const getInternalAddressFromCurrent = (accountSettings, currentLocation) 
     case '/':
       return accountSettings.isMicrosoftStartPage ? 'microsoftStart' : 'dashboard'
     default:
-      return '404page'
+      return '404'
   }
 }
 
