@@ -14,7 +14,10 @@ const Navigation: React.FC<accountSettings> = (props) => {
   useEffect(() => {
     const messageReceived = (message) => {
       if (message.data && message.data.actonCurrentPage) {
-        setNavigation(message.data.actonCurrentPage)
+        debugger
+        window.history.replaceState('', `Act-On :: ${message.data.title}`, rootContext + message.data.actonCurrentPage);
+        document.title = `Act-On :: ${message.data.title}`
+        setNavigation(rootContext + message.data.actonCurrentPage)
       }
     }
     // set resize listener
@@ -27,22 +30,23 @@ const Navigation: React.FC<accountSettings> = (props) => {
     }
   }, [])
 
+  console.log(navigation)
   return (
     <div className="navigation">
       <Link
-        to="/"
-        className={'navigation__link ' + (navigation === '/' ? 'navigation__link--active' : '')}
+        to={`${rootContext}/`}
+        className={'navigation__link ' + (navigation === `${rootContext}/` ? 'navigation__link--active' : '')}
         onClick={() => {
-          setNavigation('/')
+          setNavigation(`${rootContext}/`)
         }}
       >
         Start
       </Link>
       <Link
-        to="/landing-pages"
-        className={'navigation__link ' + (navigation === '/landing-pages' ? 'navigation__link--active' : '')}
+        to={`${rootContext}/landing-pages`}
+        className={'navigation__link ' + (navigation === `${rootContext}/landing-pages` ? 'navigation__link--active' : '')}
         onClick={() => {
-          setNavigation('/landing-pages')
+          setNavigation(`${rootContext}/landing-pages`)
         }}
       >
         Landing Pages
