@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom'
 
 import './navigation.scss'
 
-const Navigation: React.FC = () => {
+interface NavigationProps {
+  accountSettings: any
+}
+
+const Navigation: React.FC<accountSettings> = (props) => {
   const [navigation, setNavigation] = useState('/')
 
   useEffect(() => {
@@ -32,7 +36,7 @@ const Navigation: React.FC = () => {
           setNavigation('/')
         }}
       >
-        Dashboard
+        Start
       </Link>
       <Link
         to="/landing-pages"

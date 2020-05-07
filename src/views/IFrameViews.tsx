@@ -1,28 +1,31 @@
 // @ts-nocheck
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import { useHistory } from 'react-router-dom'
-import IFrame from '../components/IFrame'
 
-export const getInternalAddressFromCurrent = (currentLocation) => {
+export const getInternalAddressFromCurrent = (accountSettings, currentLocation) => {
   switch (currentLocation) {
     case '/landing-pages':
       return 'landingPageLists'
     case '/':
-      return 'dashboard'
+      return accountSettings.isMicrosoftStartPage ? 'microsoftStart' : 'dashboard'
     default:
-      return 'dashboard'
+      return '404page'
   }
 }
 
-const IFrameViews: React.FC = () => {
+interface IFrameViewProps {
+  accountSettings: any
+}
+
+const IFrameViews: React.FC<IFrameViewProps> = (props) => {
   const history = useHistory()
 
   useEffect(() => {
     return history.listen((location) => {
       const iframe: HTMLIFrameElement | null = document.getElementById('root-iframe')
       if (iframe != null) {
-        iframe.contentWindow.postMessage({ actonNavigate: getInternalAddressFromCurrent(location.pathname) }, '*')
+        iframe.contentWindow.postMessage({ actonNavigate: getInternalAddressFromCurrent(props.accountSettings, location.pathname) }, '*')
       }
     })
   }, [history])
