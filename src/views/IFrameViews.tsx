@@ -14,11 +14,11 @@ export const getInternalAddressFromCurrent = (accountSettings, currentLocation) 
   }
 }
 
-interface IFrameViewProps {
+interface FrameViewProps {
   accountSettings: any
 }
 
-const IFrameViews: React.FC<IFrameViewProps> = (props) => {
+const IFrameViews: React.FC<FrameViewProps> = (props) => {
   const history = useHistory()
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const IFrameViews: React.FC<IFrameViewProps> = (props) => {
     })
   }, [history])
 
-  return null;
+  return null
 }
 
 export default IFrameViews
