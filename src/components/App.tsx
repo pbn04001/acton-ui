@@ -17,7 +17,11 @@ export default function App() {
           setAccountSettings(result)
         },
         () => {
-          //window.location.href = '//localhost/acton/account/login.jsp'
+          if (window.location.host === 'localhost') {
+            window.location.href = '//localhost/acton/account/login.jsp'
+          } else {
+            window.location.href = '/acton/account/login.jsp'
+          }
         }
       )
   }, [])

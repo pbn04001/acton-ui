@@ -40,7 +40,9 @@ const config: webpack.Configuration = {
   devServer: {
     openPage: 'actonui/',
     publicPath: '/actonui/',
-    historyApiFallback: true,
+    historyApiFallback:{
+      index: 'dist/index.html'
+    },
     inline: true,
     port: 8081,
     proxy: {

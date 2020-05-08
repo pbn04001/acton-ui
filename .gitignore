@@ -1,3 +1,4 @@
 .idea
 acton-ui.iml
 node_modules
+/dist/

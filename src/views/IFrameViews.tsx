@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-
 import { useHistory } from 'react-router-dom'
+import { rootContext } from '../const/globals'
+import AccountSettings from '../interface/AccountSettings'
 
 export const getInternalAddressFromCurrent = (accountSettings, currentLocation) => {
   switch (currentLocation) {
@@ -11,13 +12,18 @@ export const getInternalAddressFromCurrent = (accountSettings, currentLocation) 
   }
 }
 
-const IFrameViews = (props) => {
+interface FrameViewProps {
+  accountSettings: AccountSettings
+}
+
+const IFrameViews: React.FC<FrameViewProps> = (props) => {
   const history = useHistory()
 
   useEffect(() => {
     return history.listen((location) => {
-      const iframe = document.getElementById('root-iframe')
+      const iframe = document.getElementById('root-iframe') as HTMLIFrameElement
       if (iframe != null) {
+        //@ts-ignore
         iframe.contentWindow.postMessage({ actonNavigate: getInternalAddressFromCurrent(props.accountSettings, location.pathname) }, '*')
       }
     })
