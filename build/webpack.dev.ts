@@ -4,7 +4,8 @@ import { rules } from './webpack.base'
 import path from "path"
 
 const htmlPlugin = new HtmlWebPackPlugin({
-  template: './src/index.html'
+  template: './src/index.html',
+  path: path.resolve(__dirname, '../dist'),
 })
 
 const config: webpack.Configuration = {
@@ -16,6 +17,7 @@ const config: webpack.Configuration = {
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
+    publicPath: '/',
     filename: 'bundle.js'
   },
   // Enable sourcemaps for debugging webpack's output.
@@ -38,18 +40,20 @@ const config: webpack.Configuration = {
   },
   plugins: [htmlPlugin],
   devServer: {
-    openPage: 'actonui/',
-    publicPath: '/actonui/',
-    historyApiFallback:{
-      index: 'dist/index.html'
-    },
+    openPage: 'actonui',
+    historyApiFallback: true,
     inline: true,
     port: 8081,
     proxy: {
-      '/acton' : {
+      '/acton/' : {
         target: 'http://localhost',
+      },
+      '/actonui/' : {
+        target: 'http://localhost:8081',
+        pathRewrite: {
+          '/actonui' : ''
+        }
       }
-
     }
   }
 }
