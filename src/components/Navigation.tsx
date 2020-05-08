@@ -1,20 +1,20 @@
-// @ts-nocheck
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { rootContext } from '../const/globals'
 
 import './navigation.scss'
 
 interface NavigationProps {
-  accountSettings: any
+  accountSettings: object
 }
 
-const Navigation: React.FC<accountSettings> = (props) => {
+const Navigation: React.FC<NavigationProps> = () => {
   const [navigation, setNavigation] = useState('/')
 
   useEffect(() => {
     const messageReceived = (message) => {
-      if (message.data && message.data.actonCurrentPage) {
-        window.history.replaceState('', `Act-On :: ${message.data.title}`, rootContext + message.data.actonCurrentPage);
+      if (message.data?.actonCurrentPage) {
+        window.history.replaceState('', `Act-On :: ${message.data.title}`, rootContext + message.data.actonCurrentPage)
         document.title = `Act-On :: ${message.data.title}`
         setNavigation(rootContext + message.data.actonCurrentPage)
       }
@@ -29,7 +29,6 @@ const Navigation: React.FC<accountSettings> = (props) => {
     }
   }, [])
 
-  console.log(navigation)
   return (
     <div className="navigation">
       <Link

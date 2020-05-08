@@ -1,15 +1,20 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
-    "noImplicitAny": false,
-    "target": "es5",
-    "lib": ["es5", "es6", "dom"],
+    // No module system, concatenated file
+    "module": "none",
+    // Set React as the JSX factory
     "jsx": "react",
-    "allowJs": true,
+    // Resolve modules using Node-resolution algorithm
     "moduleResolution": "node",
-    "strict": true,
+    // Target ES6 for more modern browsers
+    "target": "es6",
+    // Include typings from built-in lib declarations
+    "lib": ["es2015", "dom", "dom.iterable"],
+    // Include module source maps for debugging
     "sourceMap": true,
+    // Output to single concatenated file
+    "outFile": "dist/bundle.js",
     "esModuleInterop": true,
-    "skipLibCheck": true
-  }
+  },
+  "include": ["src"]
 }

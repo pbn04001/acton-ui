@@ -2,11 +2,11 @@ import {RuleSetRule} from 'webpack'
 
 export const rules: Array<RuleSetRule> = [
   {
-    test: /\.(js|ts|tsx)$/,
+    test: /\.(js|ts|tsx|jsx)$/,
     use: 'babel-loader'
   },
   {
-    test: /\.(js|ts|tsx)$/,
+    test: /\.(js|ts|tsx|jsx)$/,
     enforce: 'pre',
     use: [
       {

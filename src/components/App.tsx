@@ -1,11 +1,10 @@
-// @ts-nocheck
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Navigation from './Navigation'
 import IFrameViews, { getInternalAddressFromCurrent } from '../views/IFrameViews'
+import IFrame from './IFrame'
 
 import './app.scss'
-import IFrame from './IFrame'
 
 export default function App() {
   const [accountSettings, setAccountSettings] = useState(null)
