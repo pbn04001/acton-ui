@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { rootContext } from '../const/globals'
+import { useTranslation } from 'react-i18next'
 
 import './navigation.scss'
 
@@ -10,6 +11,7 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = () => {
   const [navigation, setNavigation] = useState('/')
+  const { t } = useTranslation()
 
   useEffect(() => {
     const messageReceived = (message) => {
@@ -38,7 +40,7 @@ const Navigation: React.FC<NavigationProps> = () => {
           setNavigation(`${rootContext}/`)
         }}
       >
-        Start
+        {t('Start')}
       </Link>
       <Link
         to={`${rootContext}/landingPageLists`}
@@ -47,7 +49,7 @@ const Navigation: React.FC<NavigationProps> = () => {
           setNavigation(`${rootContext}/landingPageLists`)
         }}
       >
-        Landing Pages
+        {t('Landing Pages')}
       </Link>
     </div>
   )
