@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --open --config ./build/webpack.dev.ts",
     "build-dev": "webpack --mode development --config ./build/webpack.dev.ts",
-    "build": "webpack --mode production --config ./build/webpack.prod.ts",
+    "build-test": "webpack --mode test --config ./build/webpack.dev.ts",
+    "build-prod": "webpack --mode production --config ./build/webpack.prod.ts",
     "lint": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx,jsx}' --quiet --fix",
     "graphql": "node ./build/graphql.js"
   },
@@ -14,12 +15,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/humps": "^1.1.3",
+    "@types/redux": "^3.6.0",
+    "@types/redux-saga": "^0.10.5",
+    "humps": "^2.0.1",
     "i18next": "^19.4.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-i18next": "^11.4.0",
+    "react-redux": "^7.2.0",
     "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.2"
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.5",
+    "redux-saga": "^1.1.3",
+    "url-search-params-polyfill": "^2.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -36,6 +45,7 @@
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
     "@types/react-i18next": "^8.1.0",
+    "@types/react-redux": "^7.1.8",
     "@types/react-router": "^5.1.7",
     "@types/react-router-dom": "^5.1.5",
     "@types/typescript": "^2.0.0",
@@ -47,6 +57,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
     "css-loader": "^3.5.3",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",

@@ -1,4 +1,11 @@
-import {RuleSetRule} from 'webpack'
+import webpack, {RuleSetRule} from 'webpack'
+import projectConfig from "../config/project.config";
+
+const {
+  __DEV__,
+  __TEST__,
+  __PROD__
+} = projectConfig
 
 export const rules: Array<RuleSetRule> = [
   {
@@ -54,3 +61,10 @@ export const rules: Array<RuleSetRule> = [
     loader : 'url-loader'
   }
 ]
+
+export const definePlugin = new webpack.DefinePlugin(Object.assign({}, projectConfig, {
+  __DEV__: JSON.stringify(__DEV__),
+  __TEST__: JSON.stringify(__TEST__),
+  __PROD__: JSON.stringify(__PROD__),
+  __DEBUG__: JSON.stringify(__TEST__ || __DEV__)
+}))
