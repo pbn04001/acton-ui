@@ -1,4 +1,3 @@
-import webpack from 'webpack'
 import HtmlWebPackPlugin from 'html-webpack-plugin'
 import { rules, definePlugin } from './webpack.base'
 import path from "path"
@@ -8,7 +7,7 @@ const htmlPlugin = new HtmlWebPackPlugin({
   path: path.resolve(__dirname, '../dist'),
 })
 
-const config: webpack.Configuration = {
+const config = {
   mode: 'development',
   entry: './src/index.tsx',
   resolve: {

@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --config ./build/webpack.dev.ts --experimental-modules",
-    "build-dev": "webpack --mode development --config ./build/webpack.dev.ts",
-    "build-test": "webpack --mode test --config ./build/webpack.dev.ts",
-    "build-prod": "webpack --mode production --config ./build/webpack.prod.ts",
+    "start": "webpack-dev-server --open --config build/webpackConfig.js",
+    "build-dev": "webpack --mode development --config build/webpack.dev.js",
+    "build-test": "webpack --mode test --config build/webpack.dev.js",
+    "build-prod": "webpack --mode production --config build/webpack.prod.js",
     "lint": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx,jsx}' --quiet --fix",
     "graphql": "node ./build/graphql.js"
   },
@@ -40,6 +40,7 @@
     "@types/eslint-plugin-prettier": "^3.1.0",
     "@types/html-webpack-plugin": "^3.2.2",
     "@types/i18next": "^13.0.0",
+    "@types/node": "^13.13.5",
     "@types/node-sass": "^4.11.0",
     "@types/prettier": "^2.0.0",
     "@types/react": "^16.9.34",

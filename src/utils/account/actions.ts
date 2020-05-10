@@ -1,4 +1,4 @@
-import { makeFetchActionCreators } from 'store/fetch'
+import { makeFetchActionCreators } from '../../store/fetch'
 import { LOAD_ACCOUNT, NAMESPACE } from './constants'
 import { ActionCreatorsMapObject } from 'redux'
 import { Action } from '../../interface/Action'

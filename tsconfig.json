@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     // No module system, concatenated file
-    "module": "commonjs",
+    "module": "esnext",
     // Set React as the JSX factory
     "jsx": "react",
     // Resolve modules using Node-resolution algorithm
@@ -9,14 +9,17 @@
     // Target ES6 for more modern browsers
     "target": "es5",
     // Include typings from built-in lib declarations
-    "lib": ["es2015", "dom", "dom.iterable"],
+    "lib": ["esnext", "dom", "dom.iterable"],
     // Include module source maps for debugging
     "sourceMap": true,
     // Output to single concatenated file
     "outFile": "dist/bundle.js",
     "esModuleInterop": true,
-    "baseUrl": "./src",
-    "noImplicitAny": false
+    "baseUrl": "./src/",
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "incremental": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]

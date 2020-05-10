@@ -5,7 +5,7 @@ import { I18nextProvider } from 'react-i18next'
 import { Provider } from 'react-redux'
 import App from './components/app/App'
 import i18n from './i18n'
-import store from 'store'
+import store from './store'
 
 render(
   <Provider store={store}>

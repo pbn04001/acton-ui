@@ -1,4 +1,4 @@
-import webpack, {RuleSetRule} from 'webpack'
+import webpack from 'webpack'
 import projectConfig from "../config/project.config";
 
 const {
@@ -7,7 +7,7 @@ const {
   __PROD__
 } = projectConfig
 
-export const rules: Array<RuleSetRule> = [
+export const rules = [
   {
     test: /\.(js|ts|tsx|jsx)$/,
     use: 'babel-loader'
