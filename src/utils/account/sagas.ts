@@ -1,4 +1,4 @@
-import { call, put, takeLatest, select, spawn } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 import runSagas from 'store/sagas'
 import accountServices from './service'
 import { loadAccountActions } from './actions'

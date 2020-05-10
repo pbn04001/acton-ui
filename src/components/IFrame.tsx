@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, createRef, useState } from 'react'
 
 import './iframe.scss'
 
@@ -26,10 +26,11 @@ const IFrame: React.FC<IframeProps> = (props: IframeProps) => {
     }
   }, [])
 
-  const iframeRef = useRef<HTMLIFrameElement | null>(null)
+  const iframeRef = createRef<HTMLIFrameElement>()
 
   useEffect(() => {
     if (iframeRef?.current) {
+      // @ts-ignore
       iframeRef.current.style.height = `${height}px`
     }
   }, [height])

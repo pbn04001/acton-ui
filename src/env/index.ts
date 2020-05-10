@@ -10,14 +10,12 @@ interface Environment {
 
 const paramRegex = /^(.*)(\{.*\})(.*)$/
 
-const paramMap = {
-  systemWideUrlVariable: () => 'value'
-}
+const paramMap = { systemWideUrlVariable: () => 'value' }
 
 const getParamDefaultValue = (paramName) => (paramMap[paramName] ? paramMap[paramName]() : null)
 
 export default {
-  resolveApiRoute: (name, urlParams = {}, queryParams = {}) => {
+  resolveApiRoute: function (name, urlParams = {}, queryParams = {}) {
     // get route
     const env = window['env'] as Environment
     let route = env.endpoints[name]
@@ -29,7 +27,7 @@ export default {
     // add url params
     let pieces
     while ((pieces = route.match(paramRegex))) {
-      const [_, prePiece, paramPiece, postPiece] = pieces
+      const [, prePiece, paramPiece, postPiece] = pieces
 
       const paramName = paramPiece.slice(1, -1)
       let paramValue = urlParams.hasOwnProperty(paramName) ? urlParams[paramName] : this[paramName]

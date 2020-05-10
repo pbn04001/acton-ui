@@ -1,7 +1,3 @@
-const endpoints = {
-  accountSettings: '/acton/ng-ui/jsp/accountSettings.jsp'
-}
+const endpoints = { accountSettings: '/acton/ng-ui/jsp/accountSettings.jsp' }
 
-export default {
-  endpoints
-}
+export default { endpoints }

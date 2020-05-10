@@ -14,10 +14,7 @@ const config: webpack.Configuration = {
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-    modules: [
-      path.resolve(__dirname, 'node_modules'),
-      path.resolve(__dirname, 'src'),
-    ]
+    modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
   output: {
     path: path.resolve(__dirname, '../dist'),

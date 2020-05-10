@@ -33,7 +33,10 @@ function pipelineReducers(reducerShape) {
 
       // Ensure simple equality can discern change in nextState
       if (nextNamespaceState !== nextState[namespace]) {
-        nextState = { ...nextState, [namespace]: nextNamespaceState }
+        nextState = {
+          ...nextState,
+          [namespace]: nextNamespaceState
+        }
       }
     })
     return nextState

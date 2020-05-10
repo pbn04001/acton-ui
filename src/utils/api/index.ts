@@ -5,18 +5,30 @@ const UNAUTHORIZED = 401
 
 const validateStatus = (response) => {
   if (response.status < 200 || response.status >= 300) {
-    throw Object.assign(new Error(response.statusText), { data: response, status: response.status })
+    throw Object.assign(new Error(response.statusText), {
+      data: response,
+      status: response.status
+    })
   }
 }
 
 const composeResponse = (prevResponse, assignToProp, prevProps = {}) => (response) => {
   let appended
   if (response instanceof Array) {
-    appended = response.map((child) => ({ ...child, ...prevProps }))
+    appended = response.map((child) => ({
+      ...child,
+      ...prevProps
+    }))
   } else {
-    appended = { ...response, ...prevProps }
+    appended = {
+      ...response,
+      ...prevProps
+    }
   }
-  return { ...prevResponse, [assignToProp]: appended }
+  return {
+    ...prevResponse,
+    [assignToProp]: appended
+  }
 }
 
 interface Options {
@@ -58,9 +70,15 @@ const DEFAULT_OPTIONS: Options = {
  * options: See annotated default options above
  */
 function doFetch(routeName: string, options: Options = {}) {
-  const { jsonOutput, camelizeKeys, shouldValidateStatus, urlParams, queryParams } = { ...DEFAULT_OPTIONS, ...options }
+  const { jsonOutput, camelizeKeys, shouldValidateStatus, urlParams, queryParams } = {
+    ...DEFAULT_OPTIONS,
+    ...options
+  }
 
-  const headers = { ...DEFAULT_OPTIONS.headers, ...options.headers }
+  const headers = {
+    ...DEFAULT_OPTIONS.headers,
+    ...options.headers
+  }
 
   // Shims browser supports web fetch but not URLSearchParams
   // Manually set the header to `application/x-www-form-urlencoded; charset=UTF-8`

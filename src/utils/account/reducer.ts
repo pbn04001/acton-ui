@@ -4,13 +4,14 @@ import { LOAD_ACCOUNT, NAMESPACE } from './constants'
 import './sagas'
 import AccountSettings from '../../interface/AccountSettings'
 import { Results } from '../../interface/Results'
+import { Action } from '../../interface/Action'
 
 export const loadAccountActionTypes = makeFetchActionTypes(`${NAMESPACE}/${LOAD_ACCOUNT}`)
 
 export interface AccountState {
-  accountSettings?: AccountSettings
+  accountSettings: AccountSettings | null
   loading?: boolean
-  results?: Results
+  results: Results | null
 }
 
 const initialState: AccountState = {
@@ -37,9 +38,7 @@ export function minuteClinicsList(state = initialState, action: Action) {
       return {
         ...state,
         loading: false,
-        results: {
-          error: action.payload
-        }
+        results: { error: action.payload }
       }
     default:
       return state

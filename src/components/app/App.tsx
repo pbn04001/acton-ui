@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { compose, bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -6,30 +6,21 @@ import { connect } from 'react-redux'
 import Navigation from '../Navigation'
 import IFrameViews, { getInternalAddressFromCurrent } from '../../views/IFrameViews'
 import IFrame from '../IFrame'
-
-import './app.scss'
 import actions, { AccountActions } from '../../utils/account/actions'
 import mapStateToProps, { AppStateProps } from './state/mapStateToProps'
 
-interface AppProps extends AccountActions, AppStateProps {}
+import './app.scss'
 
-const App: React.FC<AppProps> = (props: AppProps) => {
-  const {
-    loadAccount,
-    account
-  } = props
+const App: React.FC<AccountActions & AppStateProps> = (props: AccountActions & AppStateProps) => {
+  const { loadAccount, account } = props
 
-  const {
-    loading,
-    results,
-    accountSettings
-  } = account
+  const { loading, results, accountSettings } = account
 
   useEffect(() => {
     loadAccount()
   }, [])
 
-  if (loading) {
+  if (loading || accountSettings === null) {
     return <div>Loading...</div>
   } else if (results?.error) {
     return <div>Error</div>

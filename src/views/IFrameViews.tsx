@@ -24,7 +24,12 @@ const IFrameViews: React.FC<FrameViewProps> = (props) => {
       const iframe = document.getElementById('root-iframe') as HTMLIFrameElement
       if (iframe != null) {
         //@ts-ignore
-        iframe.contentWindow.postMessage({ actonNavigate: getInternalAddressFromCurrent(props.accountSettings, location.pathname) }, '*')
+        iframe.contentWindow.postMessage(
+          {
+            actonNavigate: getInternalAddressFromCurrent(props.accountSettings, location.pathname)
+          },
+          '*'
+        )
       }
     })
   }, [history])

@@ -6,12 +6,8 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 i18n.use(LanguageDetector).init({
   // we init with resources
   resources: {
-    en: {
-      translations: {}
-    },
-    es: {
-      translations: {}
-    }
+    en: { translations: {} },
+    es: { translations: {} }
   },
   fallbackLng: 'en',
   debug: true,
@@ -27,9 +23,7 @@ i18n.use(LanguageDetector).init({
     formatSeparator: ','
   },
 
-  react: {
-    wait: true
-  }
+  react: { wait: true }
 })
 
 export default i18n

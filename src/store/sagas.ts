@@ -1,9 +1,9 @@
-import createSagaMiddleware from 'redux-saga'
+import createSagaMiddleware, { SagaMiddleware } from 'redux-saga'
 
-let sagaMiddleware = null
+let sagaMiddleware: SagaMiddleware | null = null
 
 // List of all redux-sagas that are needed.
-let sagasToRun = []
+let sagasToRun: any[] = []
 
 export function reduxSagaMiddleware() {
   sagaMiddleware = createSagaMiddleware()
@@ -13,9 +13,9 @@ export function reduxSagaMiddleware() {
 // Helper method used by configuration code (configureStore.ts) to start sagas, if any
 export function startSagas() {
   if (sagasToRun.length > 0) {
-    sagasToRun.forEach((saga) => sagaMiddleware.run(saga))
+    sagasToRun.forEach((saga) => sagaMiddleware?.run(saga))
   }
-  sagasToRun = null
+  sagasToRun = []
 }
 
 // Helper method used by various views to register their sagas.
@@ -32,7 +32,7 @@ export default function runSagas(...sagas) {
       if (typeof saga !== 'function') {
         throw new Error('Saga needs to be a generator function')
       }
-      sagaMiddleware.run(saga)
+      sagaMiddleware?.run(saga)
     })
   }
 }

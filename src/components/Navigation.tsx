@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { rootContext } from '../const/globals'
 import { useTranslation } from 'react-i18next'
+import { rootContext } from '../const/globals'
 
 import './navigation.scss'
+import AccountSettings from '../interface/AccountSettings'
 
 interface NavigationProps {
-  accountSettings: object
+  accountSettings: AccountSettings
 }
 
 const Navigation: React.FC<NavigationProps> = () => {
