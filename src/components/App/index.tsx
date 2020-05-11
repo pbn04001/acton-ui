@@ -4,9 +4,9 @@ import { compose, bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { legacyActonContext } from '../../const/globals'
-import Navigation from '../navigations/Navigation'
+import Navigation from '../Navigation'
 import IFrameViews, { getInternalAddressFromCurrent } from '../../views/IFrameViews'
-import IFrame from '../iframes/IFrame'
+import IFrame from '../IFrame'
 import actions, { AccountActions } from '../../utils/account/actions'
 import mapStateToProps, { AppStateProps } from './state/mapStateToProps'
 import Svg from '../Svg'
@@ -16,7 +16,7 @@ import './app.scss'
 
 const rootClass = 'app'
 
-const App: React.FC<AccountActions & AppStateProps> = (props: AccountActions & AppStateProps) => {
+const Index: React.FC<AccountActions & AppStateProps> = (props: AccountActions & AppStateProps) => {
   const { loadAccount, account } = props
   const { loading, results, accountSettings } = account
 
@@ -54,4 +54,4 @@ const App: React.FC<AccountActions & AppStateProps> = (props: AccountActions & A
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators(actions, dispatch)
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(App)
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Index)

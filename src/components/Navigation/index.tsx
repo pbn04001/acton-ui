@@ -10,7 +10,7 @@ interface NavigationProps {
   accountSettings: AccountSettings
 }
 
-const Navigation: React.FC<NavigationProps> = () => {
+const Index: React.FC<NavigationProps> = () => {
   const [navigation, setNavigation] = useState('/')
   const { t } = useTranslation()
 
@@ -56,4 +56,4 @@ const Navigation: React.FC<NavigationProps> = () => {
   )
 }
 
-export default Navigation
+export default Index

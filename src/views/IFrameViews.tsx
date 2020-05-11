@@ -19,7 +19,7 @@ const IFrameViews: React.FC<FrameViewProps> = (props) => {
 
   useEffect(() => {
     return history.listen((location) => {
-      const iframe = document.getElementById('root-iframes') as HTMLIFrameElement
+      const iframe = document.getElementById('root-Index') as HTMLIFrameElement
       if (iframe != null) {
         //@ts-ignore
         iframe.contentWindow.postMessage(

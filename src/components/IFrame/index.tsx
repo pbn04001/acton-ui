@@ -9,7 +9,7 @@ interface IframeProps {
   src: string
 }
 
-const IFrame: React.FC<IframeProps> = (props: IframeProps) => {
+const Index: React.FC<IframeProps> = (props: IframeProps) => {
   const [height, setHeight] = useState(getHeight())
   useEffect(() => {
     const resizeListener = () => {
@@ -38,4 +38,4 @@ const IFrame: React.FC<IframeProps> = (props: IframeProps) => {
   return <iframe id={props.id} className="iframe" frameBorder="0" ref={iframeRef} src={props.src}></iframe>
 }
 
-export default IFrame
+export default Index
