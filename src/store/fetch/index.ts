@@ -1,5 +1,5 @@
 import { INITIAL, LOADING, SUCCESS, ERROR } from './status'
-import { Action } from '../../interface/Act ion'
+import { Action } from 'interface/Action'
 
 export const makeFetchActionTypes = (namespace) => ({
   REQUEST: `${namespace}/REQUEST`,

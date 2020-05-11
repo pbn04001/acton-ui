@@ -1,5 +1,5 @@
 import account from 'utils/account/reducer'
-import pipelineReducers from 'store/pipelineReducer'
+import pipelineReducers from '../store/pipelineReducer'
 
 const appReducer = pipelineReducers({ account })
 

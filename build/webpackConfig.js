@@ -11,10 +11,6 @@ const __DEV__  = NODE_ENV === 'development',
 const rules = [
     {
         test: /\.(js|ts|tsx|jsx)$/,
-        use: 'babel-loader'
-    },
-    {
-        test: /\.(js|ts|tsx|jsx)$/,
         enforce: 'pre',
         use: [
             {
@@ -81,7 +77,7 @@ const config = {
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-        modules: [path.resolve(__dirname, 'src'), 'node_modules']
+        modules: [path.resolve(__dirname, '../src'), 'node_modules']
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -89,7 +85,7 @@ const config = {
         filename: 'bundle.js'
     },
     // Enable sourcemaps for debugging webpack's output.
-    devtool: "source-map",
+    devtool: 'source-map',
     module: {
         rules: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
