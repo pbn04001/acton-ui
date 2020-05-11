@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import { I18nextProvider } from 'react-i18next'
 import { Provider } from 'react-redux'
-import App from './components/app/App'
+import App from './components/apps/App'
 import i18n from './i18n'
 import store from './store'
 

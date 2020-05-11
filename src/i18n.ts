@@ -13,7 +13,7 @@ i18n.use(LanguageDetector).init({
   fallbackLng: 'en',
   debug: isDebug(),
 
-  // have a common namespace used around the full app
+  // have a common namespace used around the full apps
   ns: ['translations'],
   defaultNS: 'translations',
 
