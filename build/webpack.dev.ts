@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import HtmlWebPackPlugin from 'html-webpack-plugin'
-import { rules, definePlugin } from './webpack.base'
+import {rules, definePlugin } from './webpack.base'
 import path from "path"
 
 const htmlPlugin = new HtmlWebPackPlugin({
@@ -11,9 +11,12 @@ const htmlPlugin = new HtmlWebPackPlugin({
 const config: webpack.Configuration = {
   mode: 'development',
   entry: './src/index.tsx',
+  optimization: {
+    minimize: true
+  },
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    extensions: ['.ts', '.tsx', '.js', '.json'],
     modules: [path.resolve(__dirname, '../src'), 'node_modules']
   },
   output: {
@@ -41,7 +44,7 @@ const config: webpack.Configuration = {
   },
   plugins: [
     htmlPlugin,
-    definePlugin,
+    definePlugin
   ],
   devServer: {
     openPage: 'actonui',

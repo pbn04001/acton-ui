@@ -1,6 +1,6 @@
 import path from 'path'
 import HtmlWebPackPlugin from 'html-webpack-plugin'
-import { rules, definePlugin } from './webpack.base'
+import {rules, definePlugin} from './webpack.base'
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './src/index.html',
@@ -10,6 +10,9 @@ const htmlPlugin = new HtmlWebPackPlugin({
 const config = {
   mode: 'production',
   entry: './src/index.tsx',
+  optimization: {
+    minimize: true
+  },
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'bundle.js'
