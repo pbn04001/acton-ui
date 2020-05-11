@@ -1,16 +1,18 @@
-import { getWindow } from '../utils/window'
 import './config.env'
 
 export function isProd(): boolean {
-  return getWindow('__PROD__')
+  // @ts-ignore
+  return __PROD__
 }
 
 export function isDev(): boolean {
-  return getWindow('__DEV__')
+  // @ts-ignore
+  return __DEV__
 }
 
 export function isDebug(): boolean {
-  return getWindow('__DEBUG__')
+  // @ts-ignore
+  return __DEBUG__
 }
 
 export function logError(error: any) {
@@ -20,7 +22,7 @@ export function logError(error: any) {
 }
 
 export function getEnv(): Environment {
-  return getWindow('env')
+  return (window as any)['env']
 }
 
 interface Environment {

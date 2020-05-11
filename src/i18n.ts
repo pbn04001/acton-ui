@@ -2,6 +2,7 @@ import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import en from 'translations/en.json'
 import es from 'translations/es.json'
+import { isDebug } from './env'
 
 i18n.use(LanguageDetector).init({
   // we init with resources
@@ -10,7 +11,7 @@ i18n.use(LanguageDetector).init({
     es: { translations: es }
   },
   fallbackLng: 'en',
-  debug: true,
+  debug: isDebug(),
 
   // have a common namespace used around the full app
   ns: ['translations'],

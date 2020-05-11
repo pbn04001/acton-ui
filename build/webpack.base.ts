@@ -1,11 +1,6 @@
 import webpack, {RuleSetRule} from 'webpack'
 import projectConfig from "../config/project.config";
-
-const {
-  __DEV__,
-  __TEST__,
-  __PROD__
-} = projectConfig
+import CodeValueObject = webpack.DefinePlugin.CodeValueObject
 
 export const rules: Array<RuleSetRule> = [
   {
@@ -58,9 +53,7 @@ export const rules: Array<RuleSetRule> = [
   }
 ]
 
-export const definePlugin = new webpack.DefinePlugin(Object.assign({}, projectConfig, {
-  __DEV__: JSON.stringify(__DEV__),
-  __TEST__: JSON.stringify(__TEST__),
-  __PROD__: JSON.stringify(__PROD__),
-  __DEBUG__: JSON.stringify(__TEST__ || __DEV__)
-}))
+const keys = Object.keys(projectConfig).reduce((acc, key) => ({...acc, [key]: JSON.stringify(projectConfig[key]) as CodeValueObject }), {})
+
+export const definePlugin = new webpack.DefinePlugin(keys)
+

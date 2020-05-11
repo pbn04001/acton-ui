@@ -11,9 +11,6 @@ const htmlPlugin = new HtmlWebPackPlugin({
 const config: webpack.Configuration = {
   mode: 'development',
   entry: './src/index.tsx',
-  optimization: {
-    minimize: true
-  },
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.json'],

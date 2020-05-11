@@ -4,8 +4,11 @@ const __DEV__  = NODE_ENV === 'development',
   __TEST__ = NODE_ENV === 'test',
   __PROD__ = NODE_ENV === 'production'
 
-export default {
+const config: { [key: string]: boolean } = {
   __DEV__,
   __TEST__,
-  __PROD__
+  __PROD__,
+  __DEBUG__: __DEV__ || __TEST__
 }
+
+export default config;
