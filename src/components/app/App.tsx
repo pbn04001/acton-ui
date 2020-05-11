@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { compose, bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import { legacyActonContext } from '../../const/globals'
 import Navigation from '../navigation/Navigation'
 import IFrameViews, { getInternalAddressFromCurrent } from '../../views/IFrameViews'
 import IFrame from '../iframe/IFrame'
 import actions, { AccountActions } from '../../utils/account/actions'
 import mapStateToProps, { AppStateProps } from './state/mapStateToProps'
 import Svg from '../Svg'
+import PageError from '../PageError'
 
 import './app.scss'
 
@@ -23,7 +25,7 @@ const App: React.FC<AccountActions & AppStateProps> = (props: AccountActions & A
   }, [])
 
   if (results?.error) {
-    return <div>Error Occurred</div>
+    return <PageError />
   } else if (loading || accountSettings === null) {
     return (
       <div className={`${rootClass}__loading`}>
@@ -42,7 +44,10 @@ const App: React.FC<AccountActions & AppStateProps> = (props: AccountActions & A
           </Route>
         </Switch>
       </Router>
-      <IFrame id="root-iframe" src={`/acton/ng-ui/${getInternalAddressFromCurrent(accountSettings, window.location.pathname)}?actonUIFrame=true`} />
+      <IFrame
+        id="root-iframe"
+        src={`${legacyActonContext}/ng-ui/${getInternalAddressFromCurrent(accountSettings, window.location.pathname)}?actonUIFrame=true`}
+      />
     </>
   )
 }

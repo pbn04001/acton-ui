@@ -1,5 +1,6 @@
 import humps from 'humps'
 import env from 'env'
+import { legacyActonContext } from '../../const/globals'
 
 const UNAUTHORIZED = 401
 const NOT_FOUND = 302
@@ -118,9 +119,9 @@ function doFetch(routeName: string, options: Options = {}) {
         // Any 401 anywhere assumes user has expired auth
         if (error.status === UNAUTHORIZED || error.status === NOT_FOUND) {
           if (window.location.host === 'localhost') {
-            window.location.href = '//localhost/acton/login.jsp'
+            window.location.href = `//localhost${legacyActonContext}/login.jsp`
           } else {
-            window.location.href = '/acton/login.jsp'
+            window.location.href = `${legacyActonContext}/login.jsp`
           }
         }
       })
