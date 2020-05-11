@@ -4,12 +4,10 @@ import { rootContext } from '../const/globals'
 import AccountSettings from '../interface/AccountSettings'
 
 export const getInternalAddressFromCurrent = (accountSettings: AccountSettings, currentLocation: string) => {
-  switch (currentLocation) {
-    case `${rootContext}/`:
-      return accountSettings.isMicrosoftStartPage ? 'microsoftStart' : 'dashboard'
-    default:
-      return currentLocation.split(`${rootContext}/`)[1]
+  if (new RegExp(`${rootContext}/?`).test(currentLocation)) {
+    return accountSettings.isMicrosoftStartPage ? 'microsoftStart' : 'dashboard'
   }
+  return currentLocation.split(`${rootContext}/`)[1]
 }
 
 interface FrameViewProps {
