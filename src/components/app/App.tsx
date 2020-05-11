@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { compose, bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import Navigation from '../Navigation'
+import Navigation from '../navigation/Navigation'
 import IFrameViews, { getInternalAddressFromCurrent } from '../../views/IFrameViews'
-import IFrame from '../IFrame'
+import IFrame from '../iframe/IFrame'
 import actions, { AccountActions } from '../../utils/account/actions'
 import mapStateToProps, { AppStateProps } from './state/mapStateToProps'
 
