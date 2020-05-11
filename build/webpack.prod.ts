@@ -1,6 +1,6 @@
 import path from 'path'
 import HtmlWebPackPlugin from 'html-webpack-plugin'
-import {rules, definePlugin} from './webpack.base'
+import {rules, plugins} from './webpack.base'
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './src/index.html',
@@ -30,7 +30,7 @@ const config = {
       ...rules
     ]
   },
-  plugins: [htmlPlugin, definePlugin]
+  plugins: [htmlPlugin, ...plugins]
 }
 
 export default config

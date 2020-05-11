@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import HtmlWebPackPlugin from 'html-webpack-plugin'
-import {rules, definePlugin } from './webpack.base'
+import {rules, plugins } from './webpack.base'
 import path from "path"
 
 const htmlPlugin = new HtmlWebPackPlugin({
@@ -39,10 +39,7 @@ const config: webpack.Configuration = {
       ...rules
     ]
   },
-  plugins: [
-    htmlPlugin,
-    definePlugin
-  ],
+  plugins: [htmlPlugin, ...plugins],
   devServer: {
     openPage: 'actonui',
     historyApiFallback: true,
