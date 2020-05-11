@@ -6,7 +6,7 @@ import { Action } from '../../interface/Action'
 export const loadAccountActions = makeFetchActionCreators(`${NAMESPACE}/${LOAD_ACCOUNT}`)
 
 export interface AccountActions extends ActionCreatorsMapObject {
-  loadAccount(payload?: any): Action
+  loadAccount(): Action
 }
 
 const actions: AccountActions = { loadAccount: loadAccountActions.request }

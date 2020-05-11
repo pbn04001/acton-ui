@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
-    "target": "es2019",
-    "lib": ["es2019", "dom", "dom.iterable"],
-    "module": "commonjs",
+    "target": "es5",
+    "lib": ["esnext", "dom", "dom.iterable"],
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "node",

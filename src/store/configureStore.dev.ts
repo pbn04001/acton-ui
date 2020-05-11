@@ -1,13 +1,17 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import { reduxSagaMiddleware, startSagas } from './sagas'
 import rootReducer from './rootReducer'
+import { getWindow } from '../utils/window'
 
 export default function configureStore() {
   const sagaMiddleware = reduxSagaMiddleware()
   const middleware = [sagaMiddleware]
 
   // Redux Devtools
-  const enhancers = compose(applyMiddleware(...middleware), window['__REDUX_DEVTOOLS_EXTENSION__'] && window['__REDUX_DEVTOOLS_EXTENSION__()'])
+  const enhancers = compose(
+    applyMiddleware(...middleware),
+    getWindow('__REDUX_DEVTOOLS_EXTENSION__') ? getWindow('__REDUX_DEVTOOLS_EXTENSION__()') : null
+  )
 
   const store = createStore(rootReducer, {}, enhancers)
   startSagas()

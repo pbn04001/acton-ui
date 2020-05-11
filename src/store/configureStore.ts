@@ -1,5 +1,7 @@
-if (window['__PROD__']) {
-    module.exports = require('./configureStore.prod'); // eslint-disable-line
+import { isProd } from 'env'
+
+if (isProd()) {
+  module.exports = require('./configureStore.prod')
 } else {
-    module.exports = require('./configureStore.dev'); // eslint-disable-line
+  module.exports = require('./configureStore.dev')
 }

@@ -1,3 +1,4 @@
 import base from './base.env'
+import { setWindow } from '../utils/window'
 
-window['env'] = { ...base }
+setWindow('env', { ...base })

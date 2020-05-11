@@ -15,7 +15,7 @@ const Navigation: React.FC<NavigationProps> = () => {
   const { t } = useTranslation()
 
   useEffect(() => {
-    const messageReceived = (message) => {
+    const messageReceived = (message: any) => {
       if (message.data?.actonCurrentPage) {
         window.history.replaceState('', `Act-On :: ${message.data.title}`, rootContext + message.data.actonCurrentPage)
         document.title = `Act-On :: ${message.data.title}`

@@ -1,32 +1,32 @@
 import { INITIAL, LOADING, SUCCESS, ERROR } from './status'
 import { Action } from 'interface/Action'
 
-export const makeFetchActionTypes = (namespace) => ({
+export const makeFetchActionTypes = (namespace: string) => ({
   REQUEST: `${namespace}/REQUEST`,
   RECEIVE: `${namespace}/RECEIVE`,
   FAIL: `${namespace}/FAIL`,
   RESET: `${namespace}/RESET`
 })
 
-export interface FetchActionCreators {
-  request(payload?: any): Action
-  receive(payload?: any): Action
-  fail(payload?: any): Action
-  reset(payload?: any): Action
+export interface FetchActionCreators<T> {
+  request(payload?: T): Action<T>
+  receive(payload?: T): Action<T>
+  fail(payload?: T): Action<T>
+  reset(): Action<T>
 }
 
-export const makeFetchActionCreators = (namespace): FetchActionCreators => {
+export function makeFetchActionCreators<T = undefined>(namespace: string): FetchActionCreators<T> {
   const { REQUEST, RECEIVE, FAIL, RESET } = makeFetchActionTypes(namespace)
   return {
-    request: (payload = null): Action => ({
+    request: (payload?): Action<T> => ({
       type: REQUEST,
       payload
     }),
-    receive: (payload): Action => ({
+    receive: (payload?): Action<T> => ({
       type: RECEIVE,
       payload
     }),
-    fail: (error): Action => ({
+    fail: (error?): Action<T> => ({
       type: FAIL,
       payload: error
     }),
@@ -40,10 +40,10 @@ export const initialState = () => ({
   status: INITIAL
 })
 
-export const makeFetchReducer = (namespace) => {
+export function makeFetchReducer<T>(namespace: string) {
   const { REQUEST, RECEIVE, FAIL, RESET } = makeFetchActionTypes(namespace)
 
-  const fetchReducer = (state = initialState(), action: Action) => {
+  const fetchReducer = (state = initialState(), action: Action<T>) => {
     switch (action.type) {
       case REQUEST: {
         return {

@@ -19,7 +19,7 @@ export function startSagas() {
 }
 
 // Helper method used by various views to register their sagas.
-export default function runSagas(...sagas) {
+export default function runSagas(...sagas: any[]) {
   if (!sagaMiddleware) {
     sagas.forEach((saga) => {
       if (typeof saga !== 'function') {

@@ -41,6 +41,6 @@ const App: React.FC<AccountActions & AppStateProps> = (props: AccountActions & A
   )
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(actions, dispatch)
+const mapDispatchToProps = (dispatch: any) => bindActionCreators(actions, dispatch)
 
 export default compose(connect(mapStateToProps, mapDispatchToProps))(App)

@@ -5,7 +5,7 @@ export interface AppStateProps {
   account: AccountState
 }
 
-function mapStateToProps(state): AppStateProps {
+function mapStateToProps(state: any): AppStateProps {
   return { account: getAccount(state) }
 }
 

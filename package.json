@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --config build/webpackConfig.js",
-    "build-dev": "webpack --mode development --config build/webpack.dev.js",
-    "build-test": "webpack --mode test --config build/webpack.dev.js",
-    "build-prod": "webpack --mode production --config build/webpack.prod.js",
+    "start": "webpack-dev-server --open --config build/webpack.dev.ts",
+    "build-dev": "webpack --mode development --config build/webpack.dev.ts",
+    "build-test": "webpack --mode test --config build/webpack.dev.ts",
+    "build-prod": "webpack --mode production --config build/webpack.prod.ts",
     "lint": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx,jsx}' --quiet --fix",
     "graphql": "node ./build/graphql.js"
   },
@@ -17,7 +17,6 @@
   "dependencies": {
     "@types/humps": "^1.1.3",
     "@types/redux": "^3.6.0",
-    "@types/redux-saga": "^0.10.5",
     "humps": "^2.0.1",
     "i18next": "^19.4.4",
     "react": "^16.13.1",
@@ -49,6 +48,7 @@
     "@types/react-redux": "^7.1.8",
     "@types/react-router": "^5.1.7",
     "@types/react-router-dom": "^5.1.5",
+    "@types/redux-saga": "^0.10.5",
     "@types/typescript": "^2.0.0",
     "@types/webpack": "^4.41.12",
     "@types/webpack-dev-server": "^3.10.1",

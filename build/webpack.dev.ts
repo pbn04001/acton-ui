@@ -1,3 +1,4 @@
+import webpack from 'webpack'
 import HtmlWebPackPlugin from 'html-webpack-plugin'
 import { rules, definePlugin } from './webpack.base'
 import path from "path"
@@ -7,13 +8,13 @@ const htmlPlugin = new HtmlWebPackPlugin({
   path: path.resolve(__dirname, '../dist'),
 })
 
-const config = {
+const config: webpack.Configuration = {
   mode: 'development',
   entry: './src/index.tsx',
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-    modules: [path.resolve(__dirname, 'src'), 'node_modules']
+    modules: [path.resolve(__dirname, '../src'), 'node_modules']
   },
   output: {
     path: path.resolve(__dirname, '../dist'),

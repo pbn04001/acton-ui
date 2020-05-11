@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { rootContext } from '../const/globals'
 import AccountSettings from '../interface/AccountSettings'
 
-export const getInternalAddressFromCurrent = (accountSettings, currentLocation) => {
+export const getInternalAddressFromCurrent = (accountSettings: AccountSettings, currentLocation: string) => {
   switch (currentLocation) {
     case `${rootContext}/`:
       return accountSettings.isMicrosoftStartPage ? 'microsoftStart' : 'dashboard'

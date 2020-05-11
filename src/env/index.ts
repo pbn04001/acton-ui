@@ -1,24 +1,38 @@
-if (window['__PROD__']) {
-  module.exports = require('./prod.env')
-} else {
-  module.exports = require('./dev.env')
+import { getWindow } from '../utils/window'
+
+export function isProd(): boolean {
+  return getWindow('__PROD__')
+}
+
+export function isDev(): boolean {
+  return getWindow('__DEV__')
+}
+
+export function isDebug(): boolean {
+  return getWindow('__DEBUG__')
+}
+
+export function getEnv(): Environment {
+  return getWindow('env')
 }
 
 interface Environment {
-  endpoints: object
+  endpoints: {
+    [key: string]: string
+  }
 }
 
 const paramRegex = /^(.*)(\{.*\})(.*)$/
 
-const paramMap = { systemWideUrlVariable: () => 'value' }
+const paramMap: { [key: string]: () => string } = { systemWideUrlVariable: () => 'value' }
 
-const getParamDefaultValue = (paramName) => (paramMap[paramName] ? paramMap[paramName]() : null)
+const getParamDefaultValue = (paramName: string) => (paramMap[paramName] ? paramMap[paramName]() : '')
 
 export default {
-  resolveApiRoute: function (name, urlParams = {}, queryParams = {}) {
+  resolveApiRoute: function (name: string, urlParams: { [key: string]: string } = {}, queryParams: { [key: string]: string } = {}) {
     // get route
-    const env = window['env'] as Environment
-    let route = env.endpoints[name]
+    const env = getEnv()
+    let route: string = env.endpoints[name]
 
     if (!name || !route) {
       throw new Error(`utils/env/resolveApiRoute Error Unable to resolve route, name: ${name}, route: ${route}`) // eslint-disable-line max-len
@@ -30,8 +44,7 @@ export default {
       const [, prePiece, paramPiece, postPiece] = pieces
 
       const paramName = paramPiece.slice(1, -1)
-      let paramValue = urlParams.hasOwnProperty(paramName) ? urlParams[paramName] : this[paramName]
-      if (!paramValue) paramValue = getParamDefaultValue(paramName)
+      const paramValue = urlParams.hasOwnProperty(paramName) ? urlParams[paramName] : getParamDefaultValue(paramName)
 
       if (paramValue === undefined) {
         throw new Error(`Error Unable to resolve parameter: "${paramName}" - ${name} => ${route}`)
@@ -52,4 +65,10 @@ export default {
 
     return route
   }
+}
+
+if (isProd()) {
+  module.exports = require('./prod.env')
+} else {
+  module.exports = require('./dev.env')
 }

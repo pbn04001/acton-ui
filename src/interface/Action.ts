@@ -1,8 +1,8 @@
 import { Action as ReduxAction } from 'redux'
 
-export interface Action extends ReduxAction {
+export interface Action<T = undefined> extends ReduxAction {
   type: string
-  payload?: object
+  payload?: T
   error?: boolean
   meta?: any
 }

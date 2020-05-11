@@ -15,9 +15,11 @@
 //   2. cReducer will then run with the same 3 params but now 'nextState' has the 'a' & 'b' attributes.
 //   3. The final result will be an object of shape { a, b, c }
 
-function pipelineReducers(reducerShape) {
+import { Action } from '../interface/Action'
+
+function pipelineReducers(reducerShape: any) {
   // Similar to combineReducers we're building a reducer function
-  return function reducer(state = {}, action) {
+  return function reducer(state: any = {}, action: Action) {
     let nextState = state
 
     // For each stage and for each namespace in each stage

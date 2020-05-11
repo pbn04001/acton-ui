@@ -3,7 +3,7 @@ import env from 'env'
 
 const UNAUTHORIZED = 401
 
-const validateStatus = (response) => {
+const validateStatus = (response: Response) => {
   if (response.status < 200 || response.status >= 300) {
     throw Object.assign(new Error(response.statusText), {
       data: response,
@@ -12,7 +12,7 @@ const validateStatus = (response) => {
   }
 }
 
-const composeResponse = (prevResponse, assignToProp, prevProps = {}) => (response) => {
+const composeResponse = (prevResponse: Response, assignToProp: string, prevProps = {}) => (response: Response) => {
   let appended
   if (response instanceof Array) {
     appended = response.map((child) => ({
@@ -34,11 +34,11 @@ const composeResponse = (prevResponse, assignToProp, prevProps = {}) => (respons
 interface Options {
   method?: string
   headers?: object
-  urlParams?: object
+  urlParams?: { [key: string]: string }
   jsonOutput?: boolean
   camelizeKeys?: boolean
   shouldValidateStatus?: boolean
-  queryParams?: object
+  queryParams?: { [key: string]: string }
   body?: object
 }
 
@@ -84,7 +84,7 @@ function doFetch(routeName: string, options: Options = {}) {
   // Manually set the header to `application/x-www-form-urlencoded; charset=UTF-8`
   // - https://github.com/jerrybendy/url-search-params-polyfill#known-issues.
   if (options.body instanceof URLSearchParams) {
-    headers['content-type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
+    ;(headers as any)['content-type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
   }
 
   const routeUrl = env.resolveApiRoute(routeName, urlParams, queryParams)
