@@ -1,7 +1,18 @@
+@import 'styles/index';
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 body, html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
-  background-color: gray;
+  background-color: white;
   overflow: hidden;
   padding: 0;
   margin: 0;
@@ -11,4 +22,25 @@ body, html {
   height: 100vh;
   display: flex;
   flex-wrap: nowrap;
+}
+
+.app {
+  &__loading {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & svg {
+      animation-timing-function: linear;
+      animation-name: spin;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      width: $spacing-unit-x6;
+      height: $spacing-unit-x6;
+    }
+
+  }
 }

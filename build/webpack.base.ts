@@ -1,5 +1,5 @@
-import webpack, {RuleSetRule} from 'webpack'
-import projectConfig from "../config/project.config"
+import webpack, { RuleSetRule } from 'webpack'
+import projectConfig from '../config/project.config'
 import CodeValueObject = webpack.DefinePlugin.CodeValueObject
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import path from 'path'
@@ -12,7 +12,7 @@ export const rules: Array<RuleSetRule> = [
       {
         options: {
           eslintPath: require.resolve('eslint'),
-          emitWarning: true,
+          emitWarning: true
         },
         loader: require.resolve('eslint-loader')
       }
@@ -27,40 +27,34 @@ export const rules: Array<RuleSetRule> = [
       // Translates CSS into CommonJS
       'css-loader',
       // Compiles Sass to CSS
-      'sass-loader',
-    ],
+      'sass-loader'
+    ]
   },
   {
     test: /\.svg$/,
-    include: [
-      /src(\/|\\)assets/,
-    ],
+    include: [/src(\/|\\)assets/],
     use: [
       { loader: 'svg-sprite-loader' },
       {
         loader: 'svgo-loader',
         options: {
-          plugins: [
-            { removeTitle: false },
-          ]
+          plugins: [{ removeTitle: false }]
         }
       },
-      { loader: 'svgo-loader' },
+      { loader: 'svgo-loader' }
     ]
-  }, {
+  },
+  {
     // SVG File Loader (for css/background urls)
     test: /\.svg$/,
     include: /src(\/|\\)assets(\/|\\)images/,
-    loader : 'url-loader'
+    loader: 'url-loader'
   }
 ]
 
-const keys = Object.keys(projectConfig).reduce((acc, key) => ({...acc, [key]: JSON.stringify(projectConfig[key]) as CodeValueObject }), {})
-const definePlugin = new webpack.DefinePlugin(keys);
+const keys = Object.keys(projectConfig).reduce((acc, key) => ({ ...acc, [key]: JSON.stringify(projectConfig[key]) as CodeValueObject }), {})
+const definePlugin = new webpack.DefinePlugin(keys)
 
-const copyPlugin = new CopyWebpackPlugin([
-  { from: path.resolve(__dirname, '../tomcat') }
-])
+const copyPlugin = new CopyWebpackPlugin([{ from: path.resolve(__dirname, '../tomcat') }])
 
 export const plugins = [definePlugin, copyPlugin]
-

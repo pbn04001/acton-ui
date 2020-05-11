@@ -8,22 +8,28 @@ import IFrameViews, { getInternalAddressFromCurrent } from '../../views/IFrameVi
 import IFrame from '../iframe/IFrame'
 import actions, { AccountActions } from '../../utils/account/actions'
 import mapStateToProps, { AppStateProps } from './state/mapStateToProps'
+import Svg from '../Svg'
 
 import './app.scss'
 
+const rootClass = 'app'
+
 const App: React.FC<AccountActions & AppStateProps> = (props: AccountActions & AppStateProps) => {
   const { loadAccount, account } = props
-
   const { loading, results, accountSettings } = account
 
   useEffect(() => {
     loadAccount()
   }, [])
 
-  if (loading || accountSettings === null) {
-    return <div>Loading...</div>
-  } else if (results?.error) {
-    return <div>Error</div>
+  if (results?.error) {
+    return <div>Error Occurred</div>
+  } else if (loading || accountSettings === null) {
+    return (
+      <div className={`${rootClass}__loading`}>
+        <Svg name="spinner" />
+      </div>
+    )
   }
 
   return (

@@ -1,6 +1,6 @@
 import path from 'path'
 import HtmlWebPackPlugin from 'html-webpack-plugin'
-import {rules, plugins} from './webpack.base'
+import { rules, plugins } from './webpack.base'
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './src/index.html',

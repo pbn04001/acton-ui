@@ -1,11 +1,11 @@
 import webpack from 'webpack'
 import HtmlWebPackPlugin from 'html-webpack-plugin'
-import {rules, plugins } from './webpack.base'
-import path from "path"
+import { rules, plugins } from './webpack.base'
+import path from 'path'
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './src/index.html',
-  path: path.resolve(__dirname, '../dist'),
+  path: path.resolve(__dirname, '../dist')
 })
 
 const config: webpack.Configuration = {
@@ -21,19 +21,20 @@ const config: webpack.Configuration = {
     filename: 'bundle.js'
   },
   // Enable sourcemaps for debugging webpack's output.
-  devtool: "source-map",
+  devtool: 'source-map',
   module: {
     rules: [
       // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
       {
         test: /\.(ts|tsx)$/,
         loader: 'awesome-typescript-loader',
-        exclude: /node_modules/,
-      },{
-        enforce: "pre",
+        exclude: /node_modules/
+      },
+      {
+        enforce: 'pre',
         test: /\.js$/,
-        loader: "source-map-loader",
-        exclude: /node_modules/,
+        loader: 'source-map-loader',
+        exclude: /node_modules/
       },
       ...rules
     ]
@@ -45,13 +46,13 @@ const config: webpack.Configuration = {
     inline: true,
     port: 8081,
     proxy: {
-      '/acton/' : {
-        target: 'http://localhost',
+      '/acton/': {
+        target: 'http://localhost'
       },
-      '/actonui/' : {
+      '/actonui/': {
         target: 'http://localhost:8081',
         pathRewrite: {
-          '/actonui' : ''
+          '/actonui': ''
         }
       }
     }

@@ -7,6 +7,8 @@ import App from './components/app/App'
 import i18n from './i18n'
 import store from './store'
 
+import './styles/index.scss'
+
 render(
   <Provider store={store}>
     <BrowserRouter>

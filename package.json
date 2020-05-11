@@ -8,7 +8,7 @@
     "build-dev": "webpack --mode development --config build/webpack.dev.ts",
     "build-test": "webpack --mode test --config build/webpack.dev.ts",
     "build-prod": "webpack --mode production --config build/webpack.prod.ts",
-    "lint": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx},./build/**/*.{js,ts,tsx}' --quiet --fix",
+    "lint": "tsc --noEmit && eslint './src/**/*.{js,ts,tsx}' './build/**/*.{js,ts,tsx}' --quiet --fix",
     "deploy-local": "npm run build-dev &&  cp -r dist/* /usr/local/tomcat/webapps/actonui/"
   },
   "keywords": [],
