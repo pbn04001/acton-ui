@@ -317,38 +317,182 @@ const navigation: NavigationInterface[] = [
         url: 'if/socialpub/listingPublished.jsp?type=PUBLISHED'
       }
     ]
-  }, {
+  },
+  {
     icon: 'automation',
     label: 'Automation',
-    items: [{
-      label: 'programList',
-      url: 'Automated Programs'
-    }, {
-      label: 'List Maintenance Programs',
-      url: 'listProgramList'
-    }, {
-      label: 'Program Templates',
-      url: 'programTemplateList'
-    }, {
-      label: 'Webinars',
-      url: 'if/webinar/listing.jsp'
-    }, {
-      label: 'Campaigns',
-      url: 'if/_reports/unifiedCampaigns.jsp',
-      settings: ['campaignsEnabled', '!unifiedCampaigns']
-    }, {
-      label: 'Campaigns',
-      url: 'if/campaigns/listing.jsp',
-      beta: true,
-      settings: ['connectedCampaignsEnabled', 'crmServiceEnabled']
-    }, {
-      label: 'Projects',
-      url: 'if/projects/listing.jsp',
-      settings: ['projectsEnabled']
-    }, {
-      label: 'Marketing Calendar',
-      url: 'of/mc/'
-    }]
+    items: [
+      {
+        label: 'Automated Programs',
+        url: 'programList'
+      },
+      {
+        label: 'List Maintenance Programs',
+        url: 'listProgramList'
+      },
+      {
+        label: 'Program Templates',
+        url: 'programTemplateList'
+      },
+      {
+        label: 'Webinars',
+        url: 'if/webinar/listing.jsp'
+      },
+      {
+        label: 'Campaigns',
+        url: 'if/_reports/unifiedCampaigns.jsp',
+        settings: ['campaignsEnabled', '!unifiedCampaigns']
+      },
+      {
+        label: 'Campaigns',
+        url: 'if/campaigns/listing.jsp',
+        beta: true,
+        settings: ['connectedCampaignsEnabled', 'crmServiceEnabled']
+      },
+      {
+        label: 'Projects',
+        url: 'if/projects/listing.jsp',
+        settings: ['projectsEnabled']
+      },
+      {
+        label: 'Marketing Calendar',
+        url: 'of/mc/'
+      }
+    ]
+  },
+  {
+    icon: 'reports',
+    label: 'Reports',
+    settings: ['reportsEnabled'],
+    items: [
+      {
+        label: 'Website Visitors',
+        url: 'if/reports/visitors.jsp'
+      },
+      {
+        label: 'Email Messages',
+        url: 'if/reports/messages.jsp'
+      },
+      {
+        label: 'Landing Pages',
+        url: 'if/reports/landingPages.jsp'
+      },
+      {
+        label: 'Forms & Media',
+        url: 'if/reports/forms.jsp'
+      },
+      {
+        label: 'Revenue Attribution',
+        url: 'if/_reports/revenueAttributionReport.jsp',
+        settings: ['revenueAttributionEnabled']
+      },
+      {
+        label: 'Revenue Impact',
+        url: 'if/reports/roiReport.jsp',
+        settings: ['revenueImpactEnabled']
+      },
+      {
+        label: 'Funnel Reports',
+        url: 'if/sandbox/funnel/list.jsp',
+        settings: ['funnelEnabled']
+      },
+      {
+        label: 'Data Studio',
+        openWindow: {
+          url: '/acton/_export/',
+          name: '_dataStudio'
+        },
+        settings: ['dataStudioEnabled']
+      }
+    ]
+  },
+  {
+    icon: 'settings',
+    label: 'Settings',
+    items: [
+      {
+        label: 'Ops',
+        url: 'if/ops/ops.jsp',
+        settings: ['isRootAccount', 'isLocalHost']
+      },
+      {
+        label: 'Account',
+        url: 'if/account/provision.jsp',
+        settings: ['isAccountAdmin']
+      },
+      {
+        label: 'Users',
+        url: 'if/account/users.jsp'
+      },
+      {
+        label: 'Social Media Team',
+        url: 'if/smedia/sPageSetup.jsp',
+        settings: ['!HideTwitterProspector']
+      },
+      {
+        label: 'Other Settings',
+        items: [
+          {
+            label: 'From: Addresses',
+            url: 'if/account/users.jsp?mode=fromAddressesOnly'
+          },
+          {
+            label: 'Internal IP Addresses',
+            url: 'if/account/ignoreIPs.jsp'
+          },
+          {
+            label: 'Beacon Settings',
+            url: 'if/_account/beacon/settings.jsp'
+          },
+          {
+            label: 'Paid Search Settings',
+            url: 'if/_referraldetector/index.jsp'
+          },
+          {
+            label: 'Hide All Folders',
+            hideAllListingFolders: true,
+            settings: ['hideAllFoldersEnabled']
+          },
+          {
+            label: 'Erase Contact',
+            url: 'erase/contact',
+            settings: ['isAccountAdmin']
+          },
+          {
+            label: 'Custom Account Settings',
+            url: 'if/_account/redirects/settings.jsp',
+            settings: ['isAccountAdmin']
+          }
+        ]
+      },
+      {
+        label: 'Apps',
+        url: 'if/oauth/OAuthSettings.jsp',
+        settings: ['oauthEnabled']
+      },
+      {
+        label: 'CRM Administration',
+        url: 'if/crmadmin/main.jsp',
+        settings: ['crmServiceEnabled']
+      },
+      {
+        label: 'Connectors',
+        url: 'if/_account/connectors.jsp'
+      },
+      {
+        label: 'System Status',
+        openWindow: {
+          url: 'https://status.actonsoftware.com/',
+          amc: true
+        },
+        settings: ['isAccountAdmin', 'showStatusDashboard']
+      },
+      {
+        label: 'Labs',
+        url: 'labs',
+        settings: ['isAccountAdmin']
+      }
+    ]
   }
 ]
 

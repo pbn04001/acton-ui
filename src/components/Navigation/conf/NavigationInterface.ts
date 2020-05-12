@@ -1,8 +1,9 @@
 export interface NavigationInterfaceOpenWindow {
   url: string
-  name: string
+  name?: string
   width?: number
   popup?: boolean
+  amc?: boolean
 }
 
 export interface NavigationInterface {
@@ -14,4 +15,5 @@ export interface NavigationInterface {
   openWindow?: NavigationInterfaceOpenWindow // on click command that will be passed down to acton class to be executed
   items?: NavigationInterface[] // all sub items for this navigation
   beta?: boolean // display beta tag on this feature
+  hideAllListingFolders?: boolean
 }

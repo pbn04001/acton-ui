@@ -92,6 +92,18 @@ export function openWindow(openWindow?: NavigationInterfaceOpenWindow) {
   }
 }
 
+export function hideAllListingFolders() {
+  const iframe = document.getElementById('root-iframe') as HTMLIFrameElement
+  if (iframe != null) {
+    iframe.contentWindow?.postMessage(
+      {
+        actonHideAllListingFolders: true
+      },
+      '*'
+    )
+  }
+}
+
 export function getNavigation(
   curIndex: string,
   navigation: NavigationInterface[],
@@ -136,19 +148,18 @@ export function getNavigation(
               updateActiveMenu(navIndex, activeMenu, setActiveMenu)
             }}
           >
-            {navItem.icon && (
-                <Svg
-                    name={shouldShowChildren ? `${navItem.icon}-selected` : navItem.icon}
-                    className={`${rootClass}__item-icon`}
-                />)}
+            {navItem.icon && <Svg name={shouldShowChildren ? `${navItem.icon}-selected` : navItem.icon} className={`${rootClass}__item-icon`} />}
             {!isRoot && (
               <Svg
-                  name={`caret-${shouldShowChildren ? 'down' : 'left'}`}
-                  className={classNames(`${rootClass}__item-caret`, [{
+                name={`caret-${shouldShowChildren ? 'down' : 'left'}`}
+                className={classNames(`${rootClass}__item-caret`, [
+                  {
                     [`${rootClass}__item-caret--down`]: shouldShowChildren,
                     [`${rootClass}__item-caret--left`]: !shouldShowChildren
-                  }])}
-              />)}
+                  }
+                ])}
+              />
+            )}
             <label>{t(navItem.label)}</label>
           </button>
           {shouldShowChildren && (
@@ -169,17 +180,14 @@ export function getNavigation(
           }
         ])}
       >
-        <label>{
-          t(navItem.label)}
-          {navItem.beta && (
-              <sup>BETA</sup>
-          )}
+        <label>
+          {t(navItem.label)}
+          {navItem.beta && <sup>BETA</sup>}
         </label>
-
       </span>
     )
     return (
-      <li className={`${rootClass}__sub-item`} key={navItem.url || (`${navItem.openWindow?.url}-${navItem.openWindow?.name}`)}>
+      <li className={`${rootClass}__sub-item`} key={navItem.url || `${navItem.openWindow?.url}-${navItem.openWindow?.name}`}>
         {navItem.url && (
           <Link
             to={url}
@@ -191,11 +199,15 @@ export function getNavigation(
             {getLinkInternal()}
           </Link>
         )}
-        {navItem.openWindow && (
+        {(navItem.openWindow || navItem.hideAllListingFolders) && (
           <button
             className={`${rootClass}__link`}
             onClick={() => {
-              openWindow(navItem.openWindow)
+              if (navItem.openWindow) {
+                openWindow(navItem.openWindow)
+              } else if (navItem.hideAllListingFolders) {
+                hideAllListingFolders()
+              }
             }}
           >
             {getLinkInternal()}
