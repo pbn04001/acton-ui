@@ -7,7 +7,7 @@ const htmlPlugin = new HtmlWebPackPlugin({
   path: path.resolve(__dirname, '../dist')
 })
 
-module.exports = (env:any) => {
+module.exports = (env: any) => {
   return {
     mode: 'development',
     entry: './src/index.tsx',
@@ -44,9 +44,7 @@ module.exports = (env:any) => {
     devServer: {
       openPage: 'actonui',
       historyApiFallback: {
-        rewrites: [
-          {from: /./, to: '/index.html'}
-        ]
+        rewrites: [{ from: /./, to: '/index.html' }]
       },
       inline: true,
       port: 8081,

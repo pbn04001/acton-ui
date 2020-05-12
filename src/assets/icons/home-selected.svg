@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Home_Selected</title>
+    <g id="Chrome-rebrand---light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="POC-Icons" transform="translate(-134.000000, -78.000000)" fill="#444444" fill-rule="nonzero">
+            <path d="M149.466667,84.1086667 L142,78 L134.533333,84.1086667 C134.195333,84.3846667 134,84.798 134,85.2346667 L134,92.5453333 C134,93.3486667 134.651333,94 135.454667,94 L139.333333,94 L139.333333,90 C139.333333,88.5273333 140.527333,87.3333333 142,87.3333333 C143.472667,87.3333333 144.666667,88.5273333 144.666667,90 L144.666667,94 L148.545333,94 C149.348667,94 150,93.3486667 150,92.5453333 L150,85.2346667 C150,84.7986667 149.804,84.3853333 149.466667,84.1086667 Z" id="Home_Selected"></path>
+        </g>
+    </g>
+</svg>

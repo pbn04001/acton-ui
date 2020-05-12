@@ -5,7 +5,7 @@ import AccountSettings from 'interface/AccountSettings'
 import classNames from 'classnames'
 import { rootContext } from '../../const/globals'
 import standardNav from './conf/standardNav'
-import {NavigationInterface} from './conf/NavigationInterface'
+import { NavigationInterface } from './conf/NavigationInterface'
 import Svg from '../Svg'
 
 import './navigation.scss'
@@ -17,146 +17,158 @@ interface NavigationProps {
 }
 
 interface ActiveMenu {
-    menu: string
-    force: boolean
+  menu: string
+  force: boolean
 }
 
-export function hasNavAccess(settingsAnd: boolean = true, accountSettings: AccountSettings, settings?: string[]):boolean {
-    if (!settings) return true
-    return settings.reduce((acc: boolean, cur:string, index) => {
-        if (acc && index > 0 && !settingsAnd) return true
-        if (!acc && settingsAnd) return false
-        if (cur.includes('!')) {
-            return !(accountSettings as any)[cur.replace('!', '')]
-        }
-        return !!(accountSettings as any)[cur]
-    }, true)
-}
-
-export function getNavIndex(curIndex: string, index: number):string {
-    if (curIndex.length === 0) {
-        return `${index}`
-    } else {
-        return `${curIndex}.${index}`
+export function hasNavAccess(settingsAnd = true, accountSettings: AccountSettings, settings?: string[]): boolean {
+  if (!settings) return true
+  return settings.reduce((acc: boolean, cur: string, index) => {
+    if (acc && index > 0 && !settingsAnd) return true
+    if (!acc && settingsAnd) return false
+    if (cur.includes('!')) {
+      return !(accountSettings as any)[cur.replace('!', '')]
     }
+    return !!(accountSettings as any)[cur]
+  }, true)
+}
+
+export function getNavIndex(curIndex: string, index: number): string {
+  if (curIndex.length === 0) {
+    return `${index}`
+  } else {
+    return `${curIndex}.${index}`
+  }
 }
 
 export function showChildren(navIndex: string, activeMenu: ActiveMenu): boolean {
-    if (navIndex.length > activeMenu.menu.length) return false
-    if (navIndex.length === activeMenu.menu.length) return navIndex === activeMenu.menu
-    const navParts = navIndex.split('\.')
-    const activeParts = activeMenu.menu.split('\.')
-    return navParts.reduce((acc:boolean, cur:string, index) => {
-        if (!acc) return acc
-        return cur === activeParts[index]
-    }, true)
+  if (navIndex.length > activeMenu.menu.length) return false
+  if (navIndex.length === activeMenu.menu.length) return navIndex === activeMenu.menu
+  const navParts = navIndex.split('.')
+  const activeParts = activeMenu.menu.split('.')
+  return navParts.reduce((acc: boolean, cur: string, index) => {
+    if (!acc) return acc
+    return cur === activeParts[index]
+  }, true)
 }
 
 export function childrenHasCurrent(items: NavigationInterface[], curUrl: string): boolean {
-    if (curUrl.length <= 1) return false
-    for (const item of items) {
-        if (item.url === curUrl.split(`${rootContext}/`)[1]) {
-            return true
-        }
-        if (item.items && childrenHasCurrent(item.items, curUrl)) {
-            return true
-        }
+  if (curUrl.length <= 1) return false
+  for (const item of items) {
+    const curUrlPath = curUrl.split(`${rootContext}/`)[1]
+    if (curUrlPath.split('?')[0] === item.url?.split('?')[0]) {
+      return true
     }
-    return false
+    if (item.items && childrenHasCurrent(item.items, curUrl)) {
+      return true
+    }
+  }
+  return false
 }
 
-export function updateActiveMenu(navIndex: string, activeMenu: ActiveMenu, setActiveMenu: (val:ActiveMenu) => void) {
-    if (navIndex === activeMenu.menu) {
-        const newActiveMenu = activeMenu.menu.substr(0, activeMenu.menu.lastIndexOf('.'))
-        setActiveMenu({
-            menu: newActiveMenu,
-            force: true
-        })
-    } else {
-        setActiveMenu({
-            menu: navIndex,
-            force: true
-        })
-    }
+export function updateActiveMenu(navIndex: string, activeMenu: ActiveMenu, setActiveMenu: (val: ActiveMenu) => void) {
+  if (navIndex === activeMenu.menu) {
+    const newActiveMenu = activeMenu.menu.substr(0, activeMenu.menu.lastIndexOf('.'))
+    setActiveMenu({
+      menu: newActiveMenu,
+      force: true
+    })
+  } else {
+    setActiveMenu({
+      menu: navIndex,
+      force: true
+    })
+  }
 }
 
 export function getNavigation(
-    curIndex: string,
-    navigation:NavigationInterface[],
-    curUrl: string,
-    setCurrentUrl:(val:string) => void,
-    t:Function,
-    accountSettings: AccountSettings,
-    activeMenu: ActiveMenu,
-    setActiveMenu:(val:ActiveMenu) => void,
+  curIndex: string,
+  navigation: NavigationInterface[],
+  curUrl: string,
+  setCurrentUrl: (val: string) => void,
+  t: Function,
+  accountSettings: AccountSettings,
+  activeMenu: ActiveMenu,
+  setActiveMenu: (val: ActiveMenu) => void
 ) {
-    return navigation.map((navItem, index) => {
-        if (!hasNavAccess(navItem.settingsAnd, accountSettings, navItem.settings)) return null
-        const navIndex = getNavIndex(curIndex, index)
-        if (navItem.items) {
-            const shouldShowChildren = showChildren(navIndex,activeMenu);
-            if (!shouldShowChildren && !activeMenu.force && childrenHasCurrent(navItem.items, curUrl)) {
-                setActiveMenu({
-                    menu: navIndex,
-                    force: false
-                })
+  return navigation.map((navItem, index) => {
+    if (!hasNavAccess(navItem.settingsAnd, accountSettings, navItem.settings)) return null
+    const navIndex = getNavIndex(curIndex, index)
+    const isRoot = navIndex.length === 1
+    if (navItem.items) {
+      const shouldShowChildren = showChildren(navIndex, activeMenu)
+      if (!shouldShowChildren && !activeMenu.force && childrenHasCurrent(navItem.items, curUrl)) {
+        setActiveMenu({
+          menu: navIndex,
+          force: false
+        })
+      }
+      return (
+        <li
+          className={classNames(`${rootClass}__item`, [
+            {
+              [`${rootClass}__item--root`]: isRoot
             }
-            return (
-                <li
-                    className={`${rootClass}__item`}
-                    key={navItem.label}
-                >
-                    <button
-                        className={classNames(`${rootClass}__item-name`, [{
-                            [`${rootClass}__item-name--no-icon`]: !navItem.icon,
-                            [`${rootClass}__item-name--root`]: navIndex.length === 1,
-                            [`${rootClass}__item-name--active`]: shouldShowChildren,
-                        }])}
-                        onClick={() => { updateActiveMenu(navIndex, activeMenu, setActiveMenu) }}
-                    >
-                        {navItem.icon && (
-                            <Svg name={navItem.icon} />
-                        )}
-                        <label>{t(navItem.label)}</label>
-                    </button>
-                    {shouldShowChildren && (
-                        <ul className={`${rootClass}__group`}>
-                        {getNavigation(navIndex, navItem.items, curUrl, setCurrentUrl, t, accountSettings, activeMenu, setActiveMenu)}
-                    </ul>)}
-                </li>
-            )
-        }
-        const url = `${rootContext}/${navItem.url}`
-        return (
-            <li
-                className={`${rootClass}__sub-item`}
-                key={navItem.url}
-            >
-                <Link
-                    to={url}
-                    className={`${rootClass}__link`}
-                    onClick={() => {
-                        setCurrentUrl(url)
-                    }}
-                >
-                    <span className={classNames(`${rootClass}__item-name`,[{
-                        [`${rootClass}__item-name--no-icon`]: !navItem.icon,
-                        [`${rootClass}__item-name--active`]: curUrl === url
-                    }])}>
-                        <label>{t(navItem.label)}</label>
-                    </span>
-                </Link>
-            </li>
-        )
-    })
+          ])}
+          key={navItem.label}
+        >
+          <button
+            className={classNames(`${rootClass}__item-name`, [
+              {
+                [`${rootClass}__item-name--no-icon`]: !navItem.icon,
+                [`${rootClass}__item-name--root`]: isRoot,
+                [`${rootClass}__item-name--sub`]: !isRoot,
+                [`${rootClass}__item-name--root-active`]: isRoot && shouldShowChildren
+              }
+            ])}
+            onClick={() => {
+              updateActiveMenu(navIndex, activeMenu, setActiveMenu)
+            }}
+          >
+            {navItem.icon && <Svg name={shouldShowChildren ? `${navItem.icon}-selected` : navItem.icon} />}
+            <label>{t(navItem.label)}</label>
+          </button>
+          {shouldShowChildren && (
+            <ul className={`${rootClass}__group`}>
+              {getNavigation(navIndex, navItem.items, curUrl, setCurrentUrl, t, accountSettings, activeMenu, setActiveMenu)}
+            </ul>
+          )}
+        </li>
+      )
+    }
+    const url = `${rootContext}/${navItem.url}`
+    return (
+      <li className={`${rootClass}__sub-item`} key={navItem.url}>
+        <Link
+          to={url}
+          className={`${rootClass}__link`}
+          onClick={() => {
+            setCurrentUrl(url)
+          }}
+        >
+          <span
+            className={classNames(`${rootClass}__item-name`, [
+              {
+                [`${rootClass}__item-name--no-icon`]: !navItem.icon,
+                [`${rootClass}__item-name--active`]: curUrl.split('?')[0] === url.split('?')[0]
+              }
+            ])}
+          >
+            <label>{t(navItem.label)}</label>
+          </span>
+        </Link>
+      </li>
+    )
+  })
 }
 
-const Index: React.FC<NavigationProps> = ({ accountSettings}) => {
+const Index: React.FC<NavigationProps> = (props: NavigationProps) => {
+  const { accountSettings } = props
   const [curUrl, setCurrentUrl] = useState('/')
   const [visible, setVisible] = useState(true)
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>({
-      menu: '0',
-      force: false
+    menu: '0',
+    force: false
   })
   const { t } = useTranslation()
 
@@ -168,7 +180,7 @@ const Index: React.FC<NavigationProps> = ({ accountSettings}) => {
         document.title = `Act-On :: ${message.data.title}`
         setCurrentUrl(rootContext + message.data.actonCurrentPage)
       } else if (message.data?.actonOnLogin) {
-          setVisible(false)
+        setVisible(false)
       }
     }
     // set resize listener
@@ -181,16 +193,18 @@ const Index: React.FC<NavigationProps> = ({ accountSettings}) => {
     }
   }, [])
 
-  if (!visible) return null;
+  if (!visible) return null
   return (
-      <div className={rootClass}>
-        <div className={`${rootClass}__logo`}>
-            <Svg name="logo" />
-        </div>
+    <div className={rootClass}>
+      <div className={`${rootClass}__logo`}>
+        <Svg name="logo" />
+      </div>
+      <div className={`${rootClass}__body`}>
         <ul className={`${rootClass}__main`}>
-            { getNavigation('',standardNav, curUrl, setCurrentUrl, t, accountSettings, activeMenu, setActiveMenu)}
+          {getNavigation('', standardNav, curUrl, setCurrentUrl, t, accountSettings, activeMenu, setActiveMenu)}
         </ul>
       </div>
+    </div>
   )
 }
 

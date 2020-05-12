@@ -6,12 +6,10 @@ import AccountSettings from '../../interface/AccountSettings'
 import { Results } from '../../interface/Results'
 import { Action } from '../../interface/Action'
 
-
 export interface AccountPayload {
   accountSettings?: AccountSettings
   error?: Error
 }
-
 
 export const loadAccountActionTypes = makeFetchActionTypes(`${NAMESPACE}/${LOAD_ACCOUNT}`)
 

@@ -1,11 +1,14 @@
 @import 'styles/index';
 
+$nav-width: 220px;
+
 .navigation {
-  flex: 0 0 200px;
-  padding: 10px 0 0 10px;
+  flex: 0 0 $nav-width;
+  padding: $spacing-unit-x2 0 0 0;
+  width: $nav-width;
 
   &__logo {
-    padding-left: $spacing-unit-x6;
+    padding: 0 0 $spacing-unit-x3 $spacing-unit-x6;
 
     svg {
       height: $spacing-unit-x4;
@@ -15,54 +18,78 @@
 
   &__main {
     list-style: none;
-    padding: 0
+    padding: 0;
+  }
+
+  &__body {
+    overflow-y: auto;
+    height: 100%;
+    overflow-x: hidden;
   }
 
   &__group {
     list-style: none;
-    padding: 0 0 0 $spacing-unit-x2;
+    padding: 0;
+
+    label {
+      padding-left: $spacing-unit-x2;
+    }
+    .navigation__item-name {
+      width: calc(#{$nav-width} - #{$spacing-unit-x2} - 4px);
+    }
+
+    .navigation__group {
+      label {
+        padding-left: $spacing-unit-x4;
+      }
+    }
+
   }
 
   &__link {
     display: block;
-    margin-bottom: 10px;
     cursor: pointer;
     text-decoration: none;
-
-    &--active {
-      color: white;
-    }
-  }
-
-  &__item {
-    margin-bottom: $spacing-unit-x3;
   }
 
   &__item-name {
     display: flex;
+    text-align: left;
     flex-wrap: nowrap;
     font-size: $small-font-size;
+    border-left: 4px solid transparent;
+    padding: $spacing-unit 0;
+    width: 100%;
+
+    &--active {
+      font-weight: bold;
+      background-color: $highlight-gray;
+      border-left: 4px solid $teal;
+    }
 
     &--root {
       font-size: $default-font-size;
-      margin-bottom: $spacing-unit-x2;
+      padding-bottom: $spacing-unit-x3;
+    }
 
-      .navigation__item-name--active {
-        font-weight: 600
-      }
+    &--root-active {
+      font-weight: 600;
     }
 
     &--no-icon {
-      margin-left: $spacing-unit-x3;
+      padding-left: $spacing-unit-x3;
     }
 
     svg {
+      padding-left: $spacing-unit-x3;
+      margin-right: $spacing-unit;
       flex: 0 0 $spacing-unit-x3;
       width: $spacing-unit-x2;
       height: $spacing-unit-x2;
     }
 
     label {
+      display: block;
       flex: 1 1 auto;
       cursor: pointer;
       color: $text-gray;
