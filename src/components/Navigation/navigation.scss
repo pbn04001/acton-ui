@@ -34,6 +34,10 @@
     }
   }
 
+  &__item {
+    margin-bottom: $spacing-unit-x3;
+  }
+
   &__item-name {
     display: flex;
     flex-wrap: nowrap;
@@ -41,6 +45,7 @@
 
     &--root {
       font-size: $default-font-size;
+      margin-bottom: $spacing-unit-x2;
 
       .navigation__item-name--active {
         font-weight: 600

@@ -18,7 +18,7 @@ module.exports = (env:any) => {
     },
     output: {
       path: path.resolve(__dirname, '../dist'),
-      publicPath: env.LOCAL_DEV ? '/' : '',
+      publicPath: env?.LOCAL_DEV ? '/' : '',
       filename: 'bundle.js'
     },
     // Enable sourcemaps for debugging webpack's output.

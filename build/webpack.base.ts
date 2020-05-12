@@ -54,6 +54,10 @@ export const rules: Array<RuleSetRule> = [
 const keys = Object.keys(projectConfig).reduce((acc, key) => ({ ...acc, [key]: JSON.stringify(projectConfig[key]) }), {})
 const definePlugin = new webpack.DefinePlugin(keys)
 
-const copyPlugin = new CopyWebpackPlugin([{ from: path.resolve(__dirname, '../tomcat') }])
+const copyPlugin = new CopyWebpackPlugin([{
+  from: path.resolve(__dirname, '../tomcat')
+}, {
+  from: path.resolve(__dirname, '../src/static')
+}])
 
 export const plugins = [definePlugin, copyPlugin]
