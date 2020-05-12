@@ -1,6 +1,5 @@
 import webpack, { RuleSetRule } from 'webpack'
 import projectConfig from '../config/project.config'
-import CodeValueObject = webpack.DefinePlugin.CodeValueObject
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import path from 'path'
 
@@ -52,7 +51,7 @@ export const rules: Array<RuleSetRule> = [
   }
 ]
 
-const keys = Object.keys(projectConfig).reduce((acc, key) => ({ ...acc, [key]: JSON.stringify(projectConfig[key]) as CodeValueObject }), {})
+const keys = Object.keys(projectConfig).reduce((acc, key) => ({ ...acc, [key]: JSON.stringify(projectConfig[key]) }), {})
 const definePlugin = new webpack.DefinePlugin(keys)
 
 const copyPlugin = new CopyWebpackPlugin([{ from: path.resolve(__dirname, '../tomcat') }])

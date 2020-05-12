@@ -80,14 +80,18 @@ export function getNavigation(
 
 const Index: React.FC<NavigationProps> = ({ accountSettings}) => {
   const [curUrl, setCurrentUrl] = useState('/')
+  const [visible, setVisible] = useState(true)
   const { t } = useTranslation()
 
   useEffect(() => {
     const messageReceived = (message: any) => {
       if (message.data?.actonCurrentPage) {
+        setVisible(true)
         window.history.replaceState('', `Act-On :: ${message.data.title}`, rootContext + message.data.actonCurrentPage)
         document.title = `Act-On :: ${message.data.title}`
         setCurrentUrl(rootContext + message.data.actonCurrentPage)
+      } else if (message.data?.actonOnLogin) {
+          setVisible(false)
       }
     }
     // set resize listener
@@ -100,6 +104,7 @@ const Index: React.FC<NavigationProps> = ({ accountSettings}) => {
     }
   }, [])
 
+  if (!visible) return null;
   return (
     <ul className={rootClass}>
         { getNavigation(standardNav, true, curUrl, setCurrentUrl, t, accountSettings)}

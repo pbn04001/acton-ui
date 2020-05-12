@@ -4,7 +4,7 @@ import { rootContext } from '../const/globals'
 import AccountSettings from '../interface/AccountSettings'
 
 export const getInternalAddressFromCurrent = (accountSettings: AccountSettings, currentLocation: string) => {
-  if (new RegExp(`${rootContext}/?`).test(currentLocation)) {
+  if (new RegExp(`^${rootContext}\/?$`).test(currentLocation)) {
     return accountSettings.isMicrosoftStartPage ? 'microsoftStart' : 'dashboard'
   }
   return currentLocation.split(`${rootContext}/`)[1]
@@ -19,7 +19,7 @@ const IFrameViews: React.FC<FrameViewProps> = (props) => {
 
   useEffect(() => {
     return history.listen((location) => {
-      const iframe = document.getElementById('root-Index') as HTMLIFrameElement
+      const iframe = document.getElementById('root-iframe') as HTMLIFrameElement
       if (iframe != null) {
         //@ts-ignore
         iframe.contentWindow.postMessage(
