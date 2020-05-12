@@ -6,21 +6,28 @@ import AccountSettings from '../../interface/AccountSettings'
 import { Results } from '../../interface/Results'
 import { Action } from '../../interface/Action'
 
+
+export interface AccountPayload {
+  accountSettings?: AccountSettings
+  error?: Error
+}
+
+
 export const loadAccountActionTypes = makeFetchActionTypes(`${NAMESPACE}/${LOAD_ACCOUNT}`)
 
 export interface AccountState {
-  accountSettings: AccountSettings | null
+  accountSettings?: AccountSettings
   loading?: boolean
-  results: Results | null
+  results?: Results
 }
 
 const initialState: AccountState = {
-  accountSettings: null,
+  accountSettings: undefined,
   loading: false,
-  results: null
+  results: undefined
 }
 
-export function minuteClinicsList(state = initialState, action: Action) {
+export function account(state = initialState, action: Action<AccountPayload>) {
   switch (action.type) {
     case loadAccountActionTypes.REQUEST:
       return {
@@ -31,18 +38,18 @@ export function minuteClinicsList(state = initialState, action: Action) {
     case loadAccountActionTypes.RECEIVE:
       return {
         ...state,
-        accountSettings: action.payload,
+        accountSettings: action.payload?.accountSettings,
         loading: false
       }
     case loadAccountActionTypes.FAIL:
       return {
         ...state,
         loading: false,
-        results: { error: action.payload }
+        results: { error: action.payload?.error }
       }
     default:
       return state
   }
 }
 
-export default minuteClinicsList
+export default account

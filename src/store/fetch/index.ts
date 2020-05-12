@@ -8,25 +8,25 @@ export const makeFetchActionTypes = (namespace: string) => ({
   RESET: `${namespace}/RESET`
 })
 
-export interface FetchActionCreators<T> {
-  request(payload?: T): Action<T>
-  receive(payload?: T): Action<T>
-  fail(payload?: T): Action<T>
-  reset(): Action<T>
+export interface FetchActionCreators<R, P> {
+  request(payload?: R): Action<R>
+  receive(payload?: P): Action<P>
+  fail(payload?: P): Action<P>
+  reset(): Action<any>
 }
 
-export function makeFetchActionCreators<T = undefined>(namespace: string): FetchActionCreators<T> {
+export function makeFetchActionCreators<R = undefined, P = undefined>(namespace: string): FetchActionCreators<R, P> {
   const { REQUEST, RECEIVE, FAIL, RESET } = makeFetchActionTypes(namespace)
   return {
-    request: (payload?): Action<T> => ({
+    request: (payload?): Action<R> => ({
       type: REQUEST,
       payload
     }),
-    receive: (payload?): Action<T> => ({
+    receive: (payload?): Action<P> => ({
       type: RECEIVE,
       payload
     }),
-    fail: (error?): Action<T> => ({
+    fail: (error?): Action<P> => ({
       type: FAIL,
       payload: error
     }),

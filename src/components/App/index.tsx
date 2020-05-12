@@ -26,7 +26,7 @@ const Index: React.FC<AccountActions & AppStateProps> = (props: AccountActions &
 
   if (results?.error) {
     return <PageError />
-  } else if (loading || accountSettings === null) {
+  } else if (loading || accountSettings === undefined) {
     return (
       <div className={`${rootClass}__loading`}>
         <Svg name="spinner" />
