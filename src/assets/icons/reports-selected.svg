@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Reports_Selected</title>
+    <g id="Chrome-rebrand---light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="POC-Icons" transform="translate(-134.000000, -363.000000)" fill="#444444" fill-rule="nonzero">
+            <path d="M140.666667,364.063333 C136.918667,364.479333 134,367.641333 134,371.5 C134,375.641333 137.357333,379 141.5,379 C145.359333,379 148.52,376.080667 148.936667,372.333333 L140.666667,372.333333 L140.666667,364.063333 Z M142,363 L142,371 L150,371 C149.716667,366.708667 146.292,363.283333 142,363 Z" id="Reports_Selected"></path>
+        </g>
+    </g>
+</svg>

@@ -136,7 +136,19 @@ export function getNavigation(
               updateActiveMenu(navIndex, activeMenu, setActiveMenu)
             }}
           >
-            {navItem.icon && <Svg name={shouldShowChildren ? `${navItem.icon}-selected` : navItem.icon} />}
+            {navItem.icon && (
+                <Svg
+                    name={shouldShowChildren ? `${navItem.icon}-selected` : navItem.icon}
+                    className={`${rootClass}__item-icon`}
+                />)}
+            {!isRoot && (
+              <Svg
+                  name={`caret-${shouldShowChildren ? 'down' : 'left'}`}
+                  className={classNames(`${rootClass}__item-caret`, [{
+                    [`${rootClass}__item-caret--down`]: shouldShowChildren,
+                    [`${rootClass}__item-caret--left`]: !shouldShowChildren
+                  }])}
+              />)}
             <label>{t(navItem.label)}</label>
           </button>
           {shouldShowChildren && (
@@ -157,7 +169,13 @@ export function getNavigation(
           }
         ])}
       >
-        <label>{t(navItem.label)}</label>
+        <label>{
+          t(navItem.label)}
+          {navItem.beta && (
+              <sup>BETA</sup>
+          )}
+        </label>
+
       </span>
     )
     return (
@@ -193,7 +211,7 @@ const Index: React.FC<NavigationProps> = (props: NavigationProps) => {
   const [curUrl, setCurrentUrl] = useState('/')
   const [visible, setVisible] = useState(true)
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>({
-    menu: '0',
+    menu: '',
     force: false
   })
   const { t } = useTranslation()

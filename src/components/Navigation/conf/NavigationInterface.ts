@@ -13,4 +13,5 @@ export interface NavigationInterface {
   url?: string // url to direct link to
   openWindow?: NavigationInterfaceOpenWindow // on click command that will be passed down to acton class to be executed
   items?: NavigationInterface[] // all sub items for this navigation
+  beta?: boolean // display beta tag on this feature
 }

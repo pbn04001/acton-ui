@@ -19,6 +19,7 @@ $nav-width: 220px;
   &__main {
     list-style: none;
     padding: 0;
+    margin: 0;
   }
 
   &__body {
@@ -32,16 +33,14 @@ $nav-width: 220px;
     padding: 0;
 
     label {
-      padding-left: $spacing-unit-x2;
+      padding-left: $spacing-unit-x4;
     }
     .navigation__item-name {
       width: calc(#{$nav-width} - #{$spacing-unit-x2} - 4px);
     }
 
-    .navigation__group {
-      label {
-        padding-left: $spacing-unit-x4;
-      }
+    .navigation__group label {
+      padding-left: $spacing-unit-x6;
     }
 
   }
@@ -69,7 +68,7 @@ $nav-width: 220px;
 
     &--root {
       font-size: $default-font-size;
-      padding-bottom: $spacing-unit-x3;
+      padding: $spacing-unit-x2 0 $spacing-unit-x2 0;
     }
 
     &--root-active {
@@ -80,19 +79,48 @@ $nav-width: 220px;
       padding-left: $spacing-unit-x3;
     }
 
-    svg {
-      padding-left: $spacing-unit-x3;
-      margin-right: $spacing-unit;
-      flex: 0 0 $spacing-unit-x3;
-      width: $spacing-unit-x2;
-      height: $spacing-unit-x2;
-    }
-
     label {
       display: block;
       flex: 1 1 auto;
       cursor: pointer;
       color: $text-gray;
+
+      sup {
+        padding-left: $spacing-unit-x2;
+        text-decoration: none;
+      }
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &--sub {
+      label {
+        padding-left: $spacing-unit-x2;
+      }
+    }
+  }
+
+  &__item-icon {
+    padding-left: $spacing-unit-x3;
+    margin-right: $spacing-unit;
+    flex: 0 0 $spacing-unit-x3;
+    width: $spacing-unit-x2;
+    height: $spacing-unit-x2;
+  }
+
+  &__item-caret {
+    &--down {
+      margin: 6px 6px 0 2px;
+      width: 7px;
+      height: 4px;
+    }
+
+    &--left {
+      margin: 4px 8px 0 2px;
+      width: 5px;
+      height: 8px;
     }
   }
 }

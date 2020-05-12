@@ -303,35 +303,52 @@ const navigation: NavigationInterface[] = [
           }
         ]
       },
-      /*{
-        label: '',
-        url: ''
+      {
+        label: 'A/B Test Messages',
+        url: 'if/messages/listingABTest.jsp'
       },
       {
-        label: '',
-        url: ''
+        label: 'RSS to Email',
+        url: 'if/_rss/rssListing.jsp',
+        settings: ['isNewComposerOnly']
       },
       {
-        label: '',
-        url: ''
-      },
-      {
-        label: '',
-        url: ''
-      },
-      {
-        label: '',
-        url: ''
-      },
-      {
-        label: '',
-        url: ''
-      },
-      {
-        label: '',
-        url: ''
-      }*/
+        label: 'Social Publish',
+        url: 'if/socialpub/listingPublished.jsp?type=PUBLISHED'
+      }
     ]
+  }, {
+    icon: 'automation',
+    label: 'Automation',
+    items: [{
+      label: 'programList',
+      url: 'Automated Programs'
+    }, {
+      label: 'List Maintenance Programs',
+      url: 'listProgramList'
+    }, {
+      label: 'Program Templates',
+      url: 'programTemplateList'
+    }, {
+      label: 'Webinars',
+      url: 'if/webinar/listing.jsp'
+    }, {
+      label: 'Campaigns',
+      url: 'if/_reports/unifiedCampaigns.jsp',
+      settings: ['campaignsEnabled', '!unifiedCampaigns']
+    }, {
+      label: 'Campaigns',
+      url: 'if/campaigns/listing.jsp',
+      beta: true,
+      settings: ['connectedCampaignsEnabled', 'crmServiceEnabled']
+    }, {
+      label: 'Projects',
+      url: 'if/projects/listing.jsp',
+      settings: ['projectsEnabled']
+    }, {
+      label: 'Marketing Calendar',
+      url: 'of/mc/'
+    }]
   }
 ]
 

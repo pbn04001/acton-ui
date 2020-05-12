@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="5px" height="8px" viewBox="0 0 5 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>arrow left</title>
+    <g id="Chrome-rebrand---light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="chromev2---Report---Light-Nav" transform="translate(-99.000000, -443.000000)" fill="#606060" fill-rule="nonzero">
+            <g id="Group" transform="translate(55.000000, 84.000000)">
+                <g id="Browser">
+                    <g id="content" transform="translate(1.000000, 65.000000)">
+                        <g id="nav">
+                            <path d="M42.5887498,296 L48.4112502,296 C48.934786,296 49.1965539,296.620174 48.8271431,296.981742 L45.9158929,299.831188 C45.6859286,300.056271 45.3140714,300.056271 45.0865535,299.831188 L42.1728569,296.981742 C41.8034461,296.620174 42.065214,296 42.5887498,296 Z" id="arrow-left" transform="translate(45.500000, 298.000000) rotate(-90.000000) translate(-45.500000, -298.000000) "></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
