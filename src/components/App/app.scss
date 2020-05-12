@@ -11,11 +11,20 @@
 
 body, html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: $spacing-unit-x2;
+  line-height: $spacing-unit-x2;
   background-color: white;
   overflow: hidden;
   padding: 0;
   margin: 0;
+}
+
+button {
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: $default-font-size;
+  line-height: $spacing-unit-x2;
 }
 
 #root {

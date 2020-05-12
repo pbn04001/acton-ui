@@ -1,13 +1,62 @@
+@import 'styles/index';
+
 .navigation {
-  flex: 0 0 140px;
+  flex: 0 0 200px;
   padding: 10px 0 0 10px;
+
+  &__logo {
+    padding-left: $spacing-unit-x6;
+
+    svg {
+      height: $spacing-unit-x4;
+      width: 5.56rem;
+    }
+  }
+
+  &__main {
+    list-style: none;
+    padding: 0
+  }
+
+  &__group {
+    list-style: none;
+    padding: 0 0 0 $spacing-unit-x2;
+  }
 
   &__link {
     display: block;
     margin-bottom: 10px;
+    cursor: pointer;
+    text-decoration: none;
 
     &--active {
       color: white;
+    }
+  }
+
+  &__item-name {
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: $small-font-size;
+
+    &--root {
+      font-size: $default-font-size;
+    }
+
+    &--no-icon {
+      margin-left: $spacing-unit-x3;
+    }
+
+    svg {
+      flex: 0 0 $spacing-unit-x3;
+      width: $spacing-unit-x2;
+      height: $spacing-unit-x2;
+    }
+
+    label {
+      flex: 1 1 auto;
+      cursor: pointer;
+      color: $text-gray;
     }
   }
 }

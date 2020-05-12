@@ -17,8 +17,7 @@ interface NavigationProps {
 
 export function hasNavAccess(settingsAnd: boolean = true, accountSettings: AccountSettings, settings?: string[]):boolean {
     if (!settings) return true
-    // @ts-ignore
-    return settings.reduce((acc, cur, index) => {
+    return settings.reduce((acc: boolean, cur:string, index) => {
         if (acc && index > 0 && !settingsAnd) return true
         if (!acc && settingsAnd) return false
         if (cur.includes('!')) {
@@ -28,29 +27,77 @@ export function hasNavAccess(settingsAnd: boolean = true, accountSettings: Accou
     }, true)
 }
 
+export function getNavIndex(curIndex: string, index: number):string {
+    if (curIndex.length === 0) {
+        return `${index}`
+    } else {
+        return `${curIndex}.${index}`
+    }
+}
+
+export function showChildren(navIndex: string, activeMenu: string): boolean {
+    if (navIndex.length > activeMenu.length) return false
+    if (navIndex.length === activeMenu.length) return navIndex === activeMenu
+    const navParts = navIndex.split('\.')
+    const activeParts = activeMenu.split('\.')
+    return navParts.reduce((acc:boolean, cur:string, index) => {
+        if (!acc) return acc
+        return cur === activeParts[index]
+    }, true)
+}
+
+export function childrenHasCurrent(items: NavigationInterface[], curUrl: string): boolean {
+    if (curUrl.length <= 1) return false
+    for (const item of items) {
+        if (item.url === curUrl.split(rootContext)[1]) {
+            return true
+        }
+        if (item.items && childrenHasCurrent(item.items, curUrl)) {
+            return true
+        }
+    }
+}
+
 export function getNavigation(
+    curIndex: string,
     navigation:NavigationInterface[],
-    isRoot: boolean,
     curUrl: string,
     setCurrentUrl:(val:string) => void,
     t:Function,
-    accountSettings: AccountSettings
+    accountSettings: AccountSettings,
+    activeMenu: string,
+    setActiveMenu:(val:string) => void,
 ) {
-    return navigation.map(navItem => {
+    return navigation.map((navItem, index) => {
         if (!hasNavAccess(navItem.settingsAnd, accountSettings, navItem.settings)) return null
-        if (isRoot && navItem.items) {
+        const navIndex = getNavIndex(curIndex, index)
+        if (navItem.items) {
+            const shouldShowChildren = showChildren(navIndex,activeMenu);
+            if (!shouldShowChildren) {
+                const test = childrenHasCurrent(navItem.items, curUrl);
+                debugger
+            }
+            if (!shouldShowChildren && childrenHasCurrent(navItem.items, curUrl)) {
+                setActiveMenu(navIndex)
+            }
             return (
                 <li
                     className={`${rootClass}__item`}
                     key={navItem.label}
                 >
-                    {navItem.icon && (
-                        <Svg name={navItem.icon} />
-                    )}
-                    <label>{t(navItem.label)}</label>
-                    <ul className={`${rootClass}__group`}>
-                        {getNavigation(navItem.items, false, curUrl, setCurrentUrl, t, accountSettings)}
-                    </ul>
+                    <button
+                        className={`${rootClass}__item-name ${!navItem.icon ? `${rootClass}__item-name--no-icon` : ''} ${navIndex.length === 1 ? `${rootClass}__item-name--root` : ''}`}
+                        onClick={() => { setActiveMenu(navIndex) }}
+                    >
+                        {navItem.icon && (
+                            <Svg name={navItem.icon} />
+                        )}
+                        <label>{t(navItem.label)}</label>
+                    </button>
+                    {shouldShowChildren && (
+                        <ul className={`${rootClass}__group`}>
+                        {getNavigation(navIndex, navItem.items, curUrl, setCurrentUrl, t, accountSettings, activeMenu, setActiveMenu)}
+                    </ul>)}
                 </li>
             )
         }
@@ -62,16 +109,14 @@ export function getNavigation(
             >
                 <Link
                     to={url}
-                    className={`${rootClass}__link ` + (curUrl === `url` ? `${rootClass}__link--active` : '')}
+                    className={`${rootClass}__link ` + (curUrl === url ? `${rootClass}__link--active` : '')}
                     onClick={() => {
                         setCurrentUrl(url)
                     }}
                 >
-                    <label>{t(navItem.label)}</label>
-                    {navItem.items && (
-                        <ul className={`${rootClass}__group`}>
-                            {getNavigation(navItem.items, false, curUrl, setCurrentUrl, t, accountSettings)}
-                        </ul>)}
+                    <span className={`${rootClass}__item-name ${!navItem.icon ? `${rootClass}__item-name--no-icon` : ''}`}>
+                        <label>{t(navItem.label)}</label>
+                    </span>
                 </Link>
             </li>
         )
@@ -81,6 +126,7 @@ export function getNavigation(
 const Index: React.FC<NavigationProps> = ({ accountSettings}) => {
   const [curUrl, setCurrentUrl] = useState('/')
   const [visible, setVisible] = useState(true)
+  const [activeMenu, setActiveMenu] = useState('0')
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -106,9 +152,14 @@ const Index: React.FC<NavigationProps> = ({ accountSettings}) => {
 
   if (!visible) return null;
   return (
-    <ul className={rootClass}>
-        { getNavigation(standardNav, true, curUrl, setCurrentUrl, t, accountSettings)}
-    </ul>
+      <div className={rootClass}>
+        <div className={`${rootClass}__logo`}>
+            <Svg name="logo" />
+        </div>
+        <ul className={`${rootClass}__main`}>
+            { getNavigation('',standardNav, curUrl, setCurrentUrl, t, accountSettings, activeMenu, setActiveMenu)}
+        </ul>
+      </div>
   )
 }
 
