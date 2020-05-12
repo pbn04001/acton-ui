@@ -5,7 +5,7 @@ import AccountSettings from 'interface/AccountSettings'
 import classNames from 'classnames'
 import { rootContext } from '../../const/globals'
 import standardNav from './conf/standardNav'
-import { NavigationInterface } from './conf/NavigationInterface'
+import { NavigationInterface, NavigationInterfaceOpenWindow } from './conf/NavigationInterface'
 import Svg from '../Svg'
 
 import './navigation.scss'
@@ -55,8 +55,7 @@ export function showChildren(navIndex: string, activeMenu: ActiveMenu): boolean 
 export function childrenHasCurrent(items: NavigationInterface[], curUrl: string): boolean {
   if (curUrl.length <= 1) return false
   for (const item of items) {
-    const curUrlPath = curUrl.split(`${rootContext}/`)[1]
-    if (curUrlPath.split('?')[0] === item.url?.split('?')[0]) {
+    if (curUrl.split(`${rootContext}/`)[1] === item.url) {
       return true
     }
     if (item.items && childrenHasCurrent(item.items, curUrl)) {
@@ -78,6 +77,18 @@ export function updateActiveMenu(navIndex: string, activeMenu: ActiveMenu, setAc
       menu: navIndex,
       force: true
     })
+  }
+}
+
+export function openWindow(openWindow?: NavigationInterfaceOpenWindow) {
+  const iframe = document.getElementById('root-iframe') as HTMLIFrameElement
+  if (iframe != null) {
+    iframe.contentWindow?.postMessage(
+      {
+        actonOpenWindow: openWindow
+      },
+      '*'
+    )
   }
 }
 
@@ -137,26 +148,41 @@ export function getNavigation(
       )
     }
     const url = `${rootContext}/${navItem.url}`
+    const getLinkInternal = () => (
+      <span
+        className={classNames(`${rootClass}__item-name`, [
+          {
+            [`${rootClass}__item-name--no-icon`]: !navItem.icon,
+            [`${rootClass}__item-name--active`]: curUrl === url
+          }
+        ])}
+      >
+        <label>{t(navItem.label)}</label>
+      </span>
+    )
     return (
-      <li className={`${rootClass}__sub-item`} key={navItem.url}>
-        <Link
-          to={url}
-          className={`${rootClass}__link`}
-          onClick={() => {
-            setCurrentUrl(url)
-          }}
-        >
-          <span
-            className={classNames(`${rootClass}__item-name`, [
-              {
-                [`${rootClass}__item-name--no-icon`]: !navItem.icon,
-                [`${rootClass}__item-name--active`]: curUrl.split('?')[0] === url.split('?')[0]
-              }
-            ])}
+      <li className={`${rootClass}__sub-item`} key={navItem.url || (`${navItem.openWindow?.url}-${navItem.openWindow?.name}`)}>
+        {navItem.url && (
+          <Link
+            to={url}
+            className={`${rootClass}__link`}
+            onClick={() => {
+              setCurrentUrl(url)
+            }}
           >
-            <label>{t(navItem.label)}</label>
-          </span>
-        </Link>
+            {getLinkInternal()}
+          </Link>
+        )}
+        {navItem.openWindow && (
+          <button
+            className={`${rootClass}__link`}
+            onClick={() => {
+              openWindow(navItem.openWindow)
+            }}
+          >
+            {getLinkInternal()}
+          </button>
+        )}
       </li>
     )
   })
@@ -176,9 +202,10 @@ const Index: React.FC<NavigationProps> = (props: NavigationProps) => {
     const messageReceived = (message: any) => {
       if (message.data?.actonCurrentPage) {
         setVisible(true)
-        window.history.replaceState('', `Act-On :: ${message.data.title}`, rootContext + message.data.actonCurrentPage)
+        const cleanUrl = unescape(message.data.actonCurrentPage)
+        window.history.replaceState('', `Act-On :: ${message.data.title}`, rootContext + cleanUrl)
         document.title = `Act-On :: ${message.data.title}`
-        setCurrentUrl(rootContext + message.data.actonCurrentPage)
+        setCurrentUrl(rootContext + cleanUrl)
       } else if (message.data?.actonOnLogin) {
         setVisible(false)
       }

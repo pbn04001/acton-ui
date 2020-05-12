@@ -7,7 +7,7 @@ export const getInternalAddressFromCurrent = (accountSettings: AccountSettings, 
   if (new RegExp(`^${rootContext}\/?$`).test(currentLocation)) {
     return accountSettings.isMicrosoftStartPage ? 'microsoftStart' : 'dashboard'
   }
-  return currentLocation.split(`${rootContext}/`)[1]
+  return currentLocation.split(`${rootContext}/`)[1] + window.location.search
 }
 
 interface FrameViewProps {
@@ -21,8 +21,7 @@ const IFrameViews: React.FC<FrameViewProps> = (props) => {
     return history.listen((location) => {
       const iframe = document.getElementById('root-iframe') as HTMLIFrameElement
       if (iframe != null) {
-        //@ts-ignore
-        iframe.contentWindow.postMessage(
+        iframe.contentWindow?.postMessage(
           {
             actonNavigate: getInternalAddressFromCurrent(props.accountSettings, location.pathname)
           },

@@ -191,6 +191,147 @@ const navigation: NavigationInterface[] = [
         url: 'if/_docs/mediaListing.jsp'
       }
     ]
+  },
+  {
+    icon: 'inbound',
+    label: 'Inbound',
+    items: [
+      {
+        label: 'Website Prospector',
+        url: 'if/_wvt/index.jsp'
+      },
+      {
+        label: 'Website Visitor',
+        url: 'if/lists/contact.jsp'
+      },
+      {
+        label: 'Twitter Prospector',
+        url: 'if/smedia/tweetDashboard.jsp',
+        settings: ['!HideTwitterProspector']
+      },
+      {
+        label: 'SEO Audit',
+        settings: ['seoEnabled'],
+        items: [
+          {
+            label: 'SEO Audit Web Pages',
+            url: 'if/_seo/seoListing.jsp'
+          },
+          {
+            label: 'SEO Audit Landing Pages',
+            url: 'if/_seo/seoLPListing.jsp'
+          },
+          {
+            label: 'SEO Audit Forms',
+            url: 'if/_seo/seoFormsListing.jsp'
+          }
+        ]
+      },
+      {
+        label: 'Google AdWords Report',
+        url: 'if/_reports/googleAdwords.jsp',
+        settings: ['adwordsEnabled']
+      },
+      {
+        label: 'Competitors',
+        url: 'if/inbound/websiteWatch.jsp'
+      },
+      {
+        label: 'Website Prospector Alerts',
+        url: 'if/beacon/alerts.jsp'
+      }
+    ]
+  },
+  {
+    icon: 'outbound',
+    label: 'Outbound',
+    items: [
+      {
+        label: 'New Message',
+        openWindow: {
+          url: '../_compose/start.jsp',
+          name: '_newComposeBlank'
+        },
+        settings: ['isNewComposerOnly']
+      },
+      {
+        label: 'New Message',
+        openWindow: {
+          url: '../compose/start.jsp',
+          name: 'compose',
+          width: 800,
+          popup: true
+        },
+        settings: ['!isNewComposerOnly']
+      },
+      {
+        label: 'Drafts',
+        url: 'if/_messages/emailDraftsListing.jsp',
+        settings: ['!draftListing']
+      },
+      {
+        label: 'Drafts',
+        url: 'draftLists',
+        settings: ['draftListing']
+      },
+      {
+        label: 'Sent Messages',
+        url: 'if/_messages/sentMessageListing.jsp'
+      },
+      {
+        label: 'Test Messages',
+        url: 'if/messages/listingSent.jsp?type=TEST'
+      },
+      {
+        label: 'Other Messages',
+        items: [
+          {
+            label: 'Awaiting Approval',
+            url: 'if/messages/listingScheduled.jsp?approve=1'
+          },
+          {
+            label: 'Scheduled',
+            url: 'if/messages/listingScheduled.jsp'
+          },
+          {
+            label: 'Failed',
+            url: 'if/messages/listingScheduled.jsp?failed=1'
+          },
+          {
+            label: 'Triggered Messages',
+            url: 'if/messages/listingAutoResponse.jsp'
+          }
+        ]
+      },
+      /*{
+        label: '',
+        url: ''
+      },
+      {
+        label: '',
+        url: ''
+      },
+      {
+        label: '',
+        url: ''
+      },
+      {
+        label: '',
+        url: ''
+      },
+      {
+        label: '',
+        url: ''
+      },
+      {
+        label: '',
+        url: ''
+      },
+      {
+        label: '',
+        url: ''
+      }*/
+    ]
   }
 ]
 
