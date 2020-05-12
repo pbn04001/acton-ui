@@ -46,7 +46,7 @@ const Index: React.FC<AccountActions & AppStateProps> = (props: AccountActions &
       </Router>
       <IFrame
         id="root-iframe"
-        src={`${legacyActonContext}/ng-ui/${getInternalAddressFromCurrent(accountSettings, window.location.pathname)}?actonUIFrame=true`}
+        src={`${legacyActonContext}/ng-ui/${getInternalAddressFromCurrent(accountSettings, window.location.pathname + window.location.search)}`}
       />
     </>
   )

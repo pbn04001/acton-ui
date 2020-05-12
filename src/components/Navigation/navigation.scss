@@ -41,6 +41,10 @@
 
     &--root {
       font-size: $default-font-size;
+
+      .navigation__item-name--active {
+        font-weight: 600
+      }
     }
 
     &--no-icon {
