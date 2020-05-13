@@ -168,9 +168,9 @@ export function getNavigation(
             )}
             <label>{t(navItem.label)}</label>
           </button>
-          {shouldShowChildren && (
-            <ul className={`${rootClass}__group`}>{getNavigation(navIndex, navItem.items, state, setState, t, accountSettings)}</ul>
-          )}
+          <ul className={classNames(`${rootClass}__group`,[{
+              [`${rootClass}__group--visible`]: shouldShowChildren
+          }])}>{getNavigation(navIndex, navItem.items, state, setState, t, accountSettings)}</ul>
         </li>
       )
     }

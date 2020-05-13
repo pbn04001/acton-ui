@@ -31,6 +31,13 @@ $nav-width: 220px;
   &__group {
     list-style: none;
     padding: 0;
+    max-height: 0;
+    overflow: hidden;
+
+    &--visible {
+      max-height: 1000px;
+      transition: max-height .25s ease-in;
+    }
 
     label {
       padding-left: $spacing-unit-x4;
