@@ -1,36 +1,63 @@
-import path from 'path'
-import HtmlWebPackPlugin from 'html-webpack-plugin'
-import { rules, plugins } from './webpack.base'
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const {rules, plugins} = require('./webpack.base')
+const path = require('path')
 
 const htmlPlugin = new HtmlWebPackPlugin({
-  template: './src/index.html',
-  filename: './index.html'
+    title: 'Caching',
+    template: './src/index.html',
+    path: path.resolve(__dirname, '../dist'),
+    minify: false
 })
 
-const config = {
-  mode: 'production',
-  entry: './src/index.tsx',
-  optimization: {
-    minimize: true
-  },
-  output: {
-    path: path.resolve(__dirname, '../dist'),
-    filename: 'bundle.js'
-  },
-  devtool: 'source-map',
-  resolve: {
-    // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.ts', '.tsx', '.js', '.json']
-  },
+module.exports = (env: any) => {
+    let publicPath = '';
+    if (env?.STATIC_URL) {
+        publicPath = env?.STATIC_URL
+    }
 
-  module: {
-    rules: [
-      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
-      ...rules
-    ]
-  },
-  plugins: [htmlPlugin, ...plugins]
+    return {
+        mode: 'production',
+        entry: './src/index.tsx',
+        resolve: {
+            // Add '.ts' and '.tsx' as resolvable extensions.
+            extensions: ['.ts', '.tsx', '.js', '.json'],
+            modules: [path.resolve(__dirname, '../src'), 'node_modules']
+        },
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    vendor: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendors',
+                        chunks: 'all',
+                    },
+                },
+            },
+        },
+        output: {
+            path: path.resolve(__dirname, '../dist'),
+            publicPath: publicPath,
+            filename: '[name].[contenthash].js',
+        },
+        // Enable sourcemaps for debugging webpack's output.
+        devtool: 'source-map',
+        module: {
+            rules: [
+                // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
+                {
+                    test: /\.(ts|tsx)$/,
+                    loader: 'awesome-typescript-loader',
+                    exclude: /node_modules/
+                },
+                {
+                    enforce: 'pre',
+                    test: /\.js$/,
+                    loader: 'source-map-loader',
+                    exclude: /node_modules/
+                },
+                ...rules
+            ]
+        },
+        plugins: [htmlPlugin, ...plugins]
+    }
 }
-
-export default config

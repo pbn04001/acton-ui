@@ -1,4 +1,5 @@
 import webpack, { RuleSetRule } from 'webpack'
+//import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 import projectConfig from '../config/project.config'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import path from 'path'
