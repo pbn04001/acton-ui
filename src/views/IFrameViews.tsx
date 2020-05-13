@@ -11,7 +11,7 @@ export const getInternalAddressFromCurrent = (accountSettings: AccountSettings, 
 }
 
 interface FrameViewProps {
-  accountSettings: AccountSettings
+  accountSettings?: AccountSettings
 }
 
 const IFrameViews: React.FC<FrameViewProps> = (props) => {
@@ -19,6 +19,7 @@ const IFrameViews: React.FC<FrameViewProps> = (props) => {
 
   useEffect(() => {
     return history.listen((location) => {
+      if (!props.accountSettings) return
       const iframe = document.getElementById('root-iframe') as HTMLIFrameElement
       if (iframe != null) {
         iframe.contentWindow?.postMessage(

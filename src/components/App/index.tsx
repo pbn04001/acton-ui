@@ -10,7 +10,6 @@ import IFrame from '../IFrame'
 import actions, { AccountActions } from '../../utils/account/actions'
 import mapStateToProps, { AppStateProps } from './state/mapStateToProps'
 import Svg from '../Svg'
-import PageError from '../PageError'
 
 import './app.scss'
 
@@ -24,9 +23,8 @@ const Index: React.FC<AccountActions & AppStateProps> = (props: AccountActions &
     loadAccount()
   }, [])
 
-  if (results?.error) {
-    return <PageError />
-  } else if (loading || accountSettings === undefined) {
+  const isError = results?.error !== undefined
+  if (!isError && (loading || accountSettings === undefined)) {
     return (
       <div className={`${rootClass}__loading`}>
         <Svg name="spinner" />
@@ -34,20 +32,22 @@ const Index: React.FC<AccountActions & AppStateProps> = (props: AccountActions &
     )
   }
 
+  let iframeUrl = `${legacyActonContext}/ng-ui/`;
+  if (isError) {
+    iframeUrl = `${legacyActonContext}/account/login.jsp`
+  } else if (accountSettings) {
+    iframeUrl = `${legacyActonContext}/ng-ui/${getInternalAddressFromCurrent(accountSettings, window.location.pathname + window.location.search)}`
+  }
+
   return (
     <>
       <Router>
         <Navigation accountSettings={accountSettings} />
         <Switch>
-          <Route path="*">
-            <IFrameViews accountSettings={accountSettings} />
-          </Route>
+          <Route path="*"><IFrameViews accountSettings={accountSettings} /></Route>
         </Switch>
       </Router>
-      <IFrame
-        id="root-iframe"
-        src={`${legacyActonContext}/ng-ui/${getInternalAddressFromCurrent(accountSettings, window.location.pathname + window.location.search)}`}
-      />
+      <IFrame id="root-iframe" src={iframeUrl} />
     </>
   )
 }

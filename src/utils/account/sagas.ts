@@ -8,9 +8,8 @@ import AccountSettings from '../../interface/AccountSettings'
 
 export function* loadAccountSettings() {
   try {
+    console.log('Load Account')
     const accountSettings: AccountSettings = yield call(accountServices.getAccountSettings)
-    //debugger
-    //const dynamicNav:DynamicNav = yield call(accountServices.getDynamicNav, accountSettings.dynamicNavUrl)
     yield put(
       loadAccountActions.receive({
         accountSettings
@@ -18,7 +17,7 @@ export function* loadAccountSettings() {
     )
   } catch (err) {
     logError(err)
-    yield put(loadAccountActions.fail(err))
+    yield put(loadAccountActions.fail({ error: err }))
   }
 }
 

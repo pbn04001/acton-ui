@@ -7,18 +7,23 @@ import { rootContext } from '../../const/globals'
 import standardNav from './conf/standardNav'
 import { NavigationInterface, NavigationInterfaceOpenWindow } from './conf/NavigationInterface'
 import Svg from '../Svg'
+import {bindActionCreators, compose} from 'redux'
+import actions, {AccountActions} from '../../utils/account/actions'
+import {connect} from 'react-redux'
 
 import './navigation.scss'
 
 const rootClass = 'navigation'
 
 interface NavigationProps {
-  accountSettings: AccountSettings
+  accountSettings?: AccountSettings
 }
 
-interface ActiveMenu {
+interface NavigationState {
   menu: string
   force: boolean
+  curUrl: string
+  visible: boolean
 }
 
 export function hasNavAccess(settingsAnd = true, accountSettings: AccountSettings, settings?: string[]): boolean {
@@ -41,11 +46,11 @@ export function getNavIndex(curIndex: string, index: number): string {
   }
 }
 
-export function showChildren(navIndex: string, activeMenu: ActiveMenu): boolean {
-  if (navIndex.length > activeMenu.menu.length) return false
-  if (navIndex.length === activeMenu.menu.length) return navIndex === activeMenu.menu
+export function showChildren(navIndex: string, state: NavigationState): boolean {
+  if (navIndex.length > state.menu.length) return false
+  if (navIndex.length === state.menu.length) return navIndex === state.menu
   const navParts = navIndex.split('.')
-  const activeParts = activeMenu.menu.split('.')
+  const activeParts = state.menu.split('.')
   return navParts.reduce((acc: boolean, cur: string, index) => {
     if (!acc) return acc
     return cur === activeParts[index]
@@ -65,15 +70,17 @@ export function childrenHasCurrent(items: NavigationInterface[], curUrl: string)
   return false
 }
 
-export function updateActiveMenu(navIndex: string, activeMenu: ActiveMenu, setActiveMenu: (val: ActiveMenu) => void) {
-  if (navIndex === activeMenu.menu) {
-    const newActiveMenu = activeMenu.menu.substr(0, activeMenu.menu.lastIndexOf('.'))
-    setActiveMenu({
+export function updateActiveMenu(navIndex: string, state: NavigationState, setState: (val: NavigationState) => void) {
+  if (navIndex === state.menu) {
+    const newActiveMenu = state.menu.substr(0, state.menu.lastIndexOf('.'))
+    setState({
+      ...state,
       menu: newActiveMenu,
       force: true
     })
   } else {
-    setActiveMenu({
+    setState({
+      ...state,
       menu: navIndex,
       force: true
     })
@@ -107,21 +114,20 @@ export function hideAllListingFolders() {
 export function getNavigation(
   curIndex: string,
   navigation: NavigationInterface[],
-  curUrl: string,
-  setCurrentUrl: (val: string) => void,
+  state: NavigationState,
+  setState: (val: NavigationState) => void,
   t: Function,
-  accountSettings: AccountSettings,
-  activeMenu: ActiveMenu,
-  setActiveMenu: (val: ActiveMenu) => void
+  accountSettings: AccountSettings
 ) {
   return navigation.map((navItem, index) => {
     if (!hasNavAccess(navItem.settingsAnd, accountSettings, navItem.settings)) return null
     const navIndex = getNavIndex(curIndex, index)
     const isRoot = navIndex.length === 1
     if (navItem.items) {
-      const shouldShowChildren = showChildren(navIndex, activeMenu)
-      if (!shouldShowChildren && !activeMenu.force && childrenHasCurrent(navItem.items, curUrl)) {
-        setActiveMenu({
+      const shouldShowChildren = showChildren(navIndex, state)
+      if (!shouldShowChildren && !state.force && childrenHasCurrent(navItem.items, state.curUrl)) {
+        setState({
+          ...state,
           menu: navIndex,
           force: false
         })
@@ -145,7 +151,7 @@ export function getNavigation(
               }
             ])}
             onClick={() => {
-              updateActiveMenu(navIndex, activeMenu, setActiveMenu)
+              updateActiveMenu(navIndex, state, setState)
             }}
           >
             {navItem.icon && <Svg name={shouldShowChildren ? `${navItem.icon}-selected` : navItem.icon} className={`${rootClass}__item-icon`} />}
@@ -163,9 +169,7 @@ export function getNavigation(
             <label>{t(navItem.label)}</label>
           </button>
           {shouldShowChildren && (
-            <ul className={`${rootClass}__group`}>
-              {getNavigation(navIndex, navItem.items, curUrl, setCurrentUrl, t, accountSettings, activeMenu, setActiveMenu)}
-            </ul>
+            <ul className={`${rootClass}__group`}>{getNavigation(navIndex, navItem.items, state, setState, t, accountSettings)}</ul>
           )}
         </li>
       )
@@ -176,7 +180,7 @@ export function getNavigation(
         className={classNames(`${rootClass}__item-name`, [
           {
             [`${rootClass}__item-name--no-icon`]: !navItem.icon,
-            [`${rootClass}__item-name--active`]: curUrl === url
+            [`${rootClass}__item-name--active`]: state.curUrl === url
           }
         ])}
       >
@@ -193,7 +197,10 @@ export function getNavigation(
             to={url}
             className={`${rootClass}__link`}
             onClick={() => {
-              setCurrentUrl(url)
+              setState({
+                ...state,
+                curUrl: url
+              })
             }}
           >
             {getLinkInternal()}
@@ -218,26 +225,45 @@ export function getNavigation(
   })
 }
 
-const Index: React.FC<NavigationProps> = (props: NavigationProps) => {
-  const { accountSettings } = props
-  const [curUrl, setCurrentUrl] = useState('/')
-  const [visible, setVisible] = useState(true)
-  const [activeMenu, setActiveMenu] = useState<ActiveMenu>({
+const Navigation: React.FC<NavigationProps & AccountActions> = (props: NavigationProps & AccountActions) => {
+  const { accountSettings, loadAccount } = props
+  const [state, setState] = useState<NavigationState>({
     menu: '',
-    force: false
+    force: false,
+    curUrl: '/',
+    visible: true
   })
   const { t } = useTranslation()
 
   useEffect(() => {
+    if (accountSettings) {
+      setState({
+          ...state,
+          visible: true
+      })
+    }
+  }, [accountSettings])
+
+  useEffect(() => {
     const messageReceived = (message: any) => {
       if (message.data?.actonCurrentPage) {
-        setVisible(true)
+        if (!accountSettings) {
+          loadAccount()
+        }
+        console.log('accountSettings', !!accountSettings)
         const cleanUrl = unescape(message.data.actonCurrentPage)
         window.history.replaceState('', `Act-On :: ${message.data.title}`, rootContext + cleanUrl)
         document.title = `Act-On :: ${message.data.title}`
-        setCurrentUrl(rootContext + cleanUrl)
+        setState({
+          ...state,
+          visible: true,
+          curUrl: rootContext + cleanUrl
+        })
       } else if (message.data?.actonOnLogin) {
-        setVisible(false)
+        setState({
+          ...state,
+          visible: false
+        })
       }
     }
     // set resize listener
@@ -250,19 +276,20 @@ const Index: React.FC<NavigationProps> = (props: NavigationProps) => {
     }
   }, [])
 
-  if (!visible) return null
+  if (!state.visible || !accountSettings) return null
   return (
     <div className={rootClass}>
       <div className={`${rootClass}__logo`}>
         <Svg name="logo" />
       </div>
       <div className={`${rootClass}__body`}>
-        <ul className={`${rootClass}__main`}>
-          {getNavigation('', standardNav, curUrl, setCurrentUrl, t, accountSettings, activeMenu, setActiveMenu)}
-        </ul>
+        <ul className={`${rootClass}__main`}>{getNavigation('', standardNav, state, setState, t, accountSettings)}</ul>
       </div>
     </div>
   )
 }
 
-export default Index
+const mapDispatchToProps = (dispatch: any) => bindActionCreators(actions, dispatch)
+
+// @ts-ignore
+export default compose(connect(null, mapDispatchToProps))(Navigation)
