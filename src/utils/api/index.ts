@@ -1,8 +1,5 @@
 import humps from 'humps'
 import env from 'env'
-import { loadLogin } from '../iframe'
-
-const UNAUTHORIZED = 401
 
 const validateStatus = (response: Response) => {
   if (response.status < 200 || response.status >= 300) {
@@ -115,10 +112,6 @@ function doFetch(routeName: string, options: Options = {}) {
       })
       .catch((error) => {
         reject(error)
-        // Any 401 anywhere assumes user has expired auth
-        if (error.status === UNAUTHORIZED) {
-          loadLogin()
-        }
       })
   })
 }
