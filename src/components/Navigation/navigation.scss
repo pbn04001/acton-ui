@@ -25,11 +25,12 @@ $nav-width: 220px;
 
   &__body {
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: visible;
     position: absolute;
-    top: $spacing-unit-x9;
-    height: calc(100vh - #{$spacing-unit-x9});
+    top: $spacing-unit-x10;
+    height: calc(100vh - #{$spacing-unit-x10});
     left: 0;
+    width: $nav-width;
   }
 
   &__group {

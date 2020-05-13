@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import AccountSettings from 'interface/AccountSettings'
@@ -154,7 +154,6 @@ export function getNavigation(
           force: false
         })
       }
-      const buttonRef = useRef<HTMLButtonElement | null>(null)
       return (
         <li
           className={classNames(`${rootClass}__item`, [
@@ -174,10 +173,8 @@ export function getNavigation(
               }
             ])}
             onClick={() => {
-              buttonRef.current?.blur()
               updateActiveMenu(navIndex, state, setState)
             }}
-            ref={buttonRef}
           >
             {navItem.icon && <Svg name={shouldShowChildren ? `${navItem.icon}-selected` : navItem.icon} className={`${rootClass}__item-icon`} />}
             {!isRoot && (
