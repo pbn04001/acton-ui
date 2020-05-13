@@ -7,7 +7,16 @@ const htmlPlugin = new HtmlWebPackPlugin({
   path: path.resolve(__dirname, '../dist')
 })
 
+
+
 module.exports = (env: any) => {
+  let publicPath = '';
+  if (env?.STATIC_URL) {
+    publicPath = env?.STATIC_URL
+  } else if (env?.LOCAL_DEV) {
+    publicPath = '/'
+  }
+
   return {
     mode: 'development',
     entry: './src/index.tsx',
@@ -18,7 +27,7 @@ module.exports = (env: any) => {
     },
     output: {
       path: path.resolve(__dirname, '../dist'),
-      publicPath: env?.LOCAL_DEV ? '/' : '',
+      publicPath: publicPath,
       filename: 'bundle.js'
     },
     // Enable sourcemaps for debugging webpack's output.
