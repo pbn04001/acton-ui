@@ -6,6 +6,7 @@ $nav-width: 220px;
   flex: 0 0 $nav-width;
   padding: $spacing-unit-x2 0 0 0;
   width: $nav-width;
+  height: 100vh;
 
   &__logo {
     padding: 0 0 $spacing-unit-x3 $spacing-unit-x6;
@@ -24,8 +25,11 @@ $nav-width: 220px;
 
   &__body {
     overflow-y: auto;
-    height: 100%;
     overflow-x: hidden;
+    position: absolute;
+    top: $spacing-unit-x9;
+    height: calc(100vh - #{$spacing-unit-x9});
+    left: 0;
   }
 
   &__group {
