@@ -154,7 +154,7 @@ export function getNavigation(
           force: false
         })
       }
-      // @ts-ignore
+
       return (
         <li
           className={classNames(`${rootClass}__item`, [
@@ -204,7 +204,6 @@ export function getNavigation(
       )
     }
     const url = `${rootContext}/${navItem.url}`
-    // @ts-ignore
     const getLinkInternal = () => (
       <span
         className={classNames(`${rootClass}__item-name`, [
