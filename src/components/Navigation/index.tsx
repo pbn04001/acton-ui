@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import AccountSettings from 'interface/AccountSettings'
@@ -111,6 +111,33 @@ export function hideAllListingFolders() {
   }
 }
 
+export function checkFocusHidden(
+    navIndex:string,
+    state: NavigationState,
+    setState: (val: NavigationState) => void,) {
+  if (state.menu.length > navIndex.length ||
+      navIndex.length - 2 > state.menu.length) {
+    setState({
+      ...state,
+      menu: navIndex.substr(0, navIndex.lastIndexOf('.')),
+      force: true
+    })
+  } else {
+    const navIndexParts = navIndex.split('.')
+    const menuParts = state.menu.split('.')
+    for(let i = 0; i < menuParts.length; i++) {
+      if (menuParts[i] !== navIndexParts[i]) {
+        setState({
+          ...state,
+          menu: navIndex.substr(0, navIndex.lastIndexOf('.')),
+          force: true
+        })
+      }
+    }
+  }
+}
+
+
 export function getNavigation(
   curIndex: string,
   navigation: NavigationInterface[],
@@ -132,6 +159,7 @@ export function getNavigation(
           force: false
         })
       }
+      const buttonRef = useRef<HTMLButtonElement | null>(null)
       return (
         <li
           className={classNames(`${rootClass}__item`, [
@@ -151,8 +179,10 @@ export function getNavigation(
               }
             ])}
             onClick={() => {
+              buttonRef.current?.blur()
               updateActiveMenu(navIndex, state, setState)
             }}
+            ref={buttonRef}
           >
             {navItem.icon && <Svg name={shouldShowChildren ? `${navItem.icon}-selected` : navItem.icon} className={`${rootClass}__item-icon`} />}
             {!isRoot && (
@@ -190,11 +220,13 @@ export function getNavigation(
         </label>
       </span>
     )
+
     return (
       <li className={`${rootClass}__sub-item`} key={navItem.url || `${navItem.openWindow?.url}-${navItem.openWindow?.name}`}>
         {navItem.url && (
           <Link
             to={url}
+            onFocus={() => checkFocusHidden(navIndex, state, setState)}
             className={`${rootClass}__link`}
             onClick={() => {
               setState({
@@ -209,6 +241,7 @@ export function getNavigation(
         {(navItem.openWindow || navItem.hideAllListingFolders) && (
           <button
             className={`${rootClass}__link`}
+            onFocus={() => checkFocusHidden(navIndex, state, setState)}
             onClick={() => {
               if (navItem.openWindow) {
                 openWindow(navItem.openWindow)
