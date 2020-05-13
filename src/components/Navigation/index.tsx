@@ -154,6 +154,7 @@ export function getNavigation(
           force: false
         })
       }
+      // @ts-ignore
       return (
         <li
           className={classNames(`${rootClass}__item`, [
@@ -188,7 +189,7 @@ export function getNavigation(
                 ])}
               />
             )}
-            <label>{t(navItem.label)}</label>
+            <label tabIndex={-1}>{t(navItem.label)}</label>
           </button>
           <ul
             className={classNames(`${rootClass}__group`, [
@@ -203,6 +204,7 @@ export function getNavigation(
       )
     }
     const url = `${rootContext}/${navItem.url}`
+    // @ts-ignore
     const getLinkInternal = () => (
       <span
         className={classNames(`${rootClass}__item-name`, [
@@ -211,6 +213,7 @@ export function getNavigation(
             [`${rootClass}__item-name--active`]: state.curUrl === url
           }
         ])}
+        tabIndex={-1}
       >
         <label>
           {t(navItem.label)}

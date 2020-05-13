@@ -8,6 +8,18 @@ $nav-width: 220px;
   width: $nav-width;
   height: 100vh;
 
+  button:focus,
+  label:focus,
+  a:focus,
+  span:focus {
+    outline: none;
+  }
+
+  button:focus > label,
+  a:focus > span > label {
+    box-shadow: 0 0 2px 2px $browser-highlight; /* keyboard-only focus styles */
+  }
+
   &__logo {
     padding: 0 0 $spacing-unit-x3 $spacing-unit-x6;
 
