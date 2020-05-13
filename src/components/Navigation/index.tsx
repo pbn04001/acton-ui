@@ -26,6 +26,22 @@ interface NavigationState {
   visible: boolean
 }
 
+export function getTitle(url:string, standardNav: NavigationInterface[]):string | null {
+  const urlPart = url.substr(1, url.length)
+  for (const nav of standardNav) {
+    if (nav?.url === urlPart) {
+      return nav.label
+    }
+    if (nav.items) {
+      const title = getTitle(url, nav.items)
+      if (title) {
+        return title
+      }
+    }
+  }
+  return null;
+}
+
 export function hasNavAccess(settingsAnd = true, accountSettings: AccountSettings, settings?: string[]): boolean {
   if (!settings) return true
   return settings.reduce((acc: boolean, cur: string, index) => {
@@ -285,7 +301,10 @@ const Navigation: React.FC<NavigationProps & AccountActions> = (props: Navigatio
         }
         const cleanUrl = unescape(message.data.actonCurrentPage)
         window.history.replaceState('', `Act-On :: ${message.data.title}`, rootContext + cleanUrl)
-        document.title = `Act-On :: ${message.data.title}`
+        const title = getTitle(cleanUrl, standardNav)
+        if (title) {
+          document.title = `Act-On :: ${title}`
+        }
         setState({
           ...state,
           visible: true,
