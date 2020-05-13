@@ -7,9 +7,9 @@ import { rootContext } from '../../const/globals'
 import standardNav from './conf/standardNav'
 import { NavigationInterface, NavigationInterfaceOpenWindow } from './conf/NavigationInterface'
 import Svg from '../Svg'
-import {bindActionCreators, compose} from 'redux'
-import actions, {AccountActions} from '../../utils/account/actions'
-import {connect} from 'react-redux'
+import { bindActionCreators, compose } from 'redux'
+import actions, { AccountActions } from '../../utils/account/actions'
+import { connect } from 'react-redux'
 
 import './navigation.scss'
 
@@ -111,12 +111,8 @@ export function hideAllListingFolders() {
   }
 }
 
-export function checkFocusHidden(
-    navIndex:string,
-    state: NavigationState,
-    setState: (val: NavigationState) => void,) {
-  if (state.menu.length > navIndex.length ||
-      navIndex.length - 2 > state.menu.length) {
+export function checkFocusHidden(navIndex: string, state: NavigationState, setState: (val: NavigationState) => void) {
+  if (state.menu.length > navIndex.length || navIndex.length - 2 > state.menu.length) {
     setState({
       ...state,
       menu: navIndex.substr(0, navIndex.lastIndexOf('.')),
@@ -125,7 +121,7 @@ export function checkFocusHidden(
   } else {
     const navIndexParts = navIndex.split('.')
     const menuParts = state.menu.split('.')
-    for(let i = 0; i < menuParts.length; i++) {
+    for (let i = 0; i < menuParts.length; i++) {
       if (menuParts[i] !== navIndexParts[i]) {
         setState({
           ...state,
@@ -136,7 +132,6 @@ export function checkFocusHidden(
     }
   }
 }
-
 
 export function getNavigation(
   curIndex: string,
@@ -198,9 +193,15 @@ export function getNavigation(
             )}
             <label>{t(navItem.label)}</label>
           </button>
-          <ul className={classNames(`${rootClass}__group`,[{
-              [`${rootClass}__group--visible`]: shouldShowChildren
-          }])}>{getNavigation(navIndex, navItem.items, state, setState, t, accountSettings)}</ul>
+          <ul
+            className={classNames(`${rootClass}__group`, [
+              {
+                [`${rootClass}__group--visible`]: shouldShowChildren
+              }
+            ])}
+          >
+            {getNavigation(navIndex, navItem.items, state, setState, t, accountSettings)}
+          </ul>
         </li>
       )
     }
@@ -271,8 +272,8 @@ const Navigation: React.FC<NavigationProps & AccountActions> = (props: Navigatio
   useEffect(() => {
     if (accountSettings) {
       setState({
-          ...state,
-          visible: true
+        ...state,
+        visible: true
       })
     }
   }, [accountSettings])
@@ -283,7 +284,6 @@ const Navigation: React.FC<NavigationProps & AccountActions> = (props: Navigatio
         if (!accountSettings) {
           loadAccount()
         }
-        console.log('accountSettings', !!accountSettings)
         const cleanUrl = unescape(message.data.actonCurrentPage)
         window.history.replaceState('', `Act-On :: ${message.data.title}`, rootContext + cleanUrl)
         document.title = `Act-On :: ${message.data.title}`

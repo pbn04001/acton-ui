@@ -32,7 +32,7 @@ const Index: React.FC<AccountActions & AppStateProps> = (props: AccountActions &
     )
   }
 
-  let iframeUrl = `${legacyActonContext}/ng-ui/`;
+  let iframeUrl = `${legacyActonContext}/ng-ui/`
   if (isError) {
     iframeUrl = `${legacyActonContext}/account/login.jsp`
   } else if (accountSettings) {
@@ -44,7 +44,9 @@ const Index: React.FC<AccountActions & AppStateProps> = (props: AccountActions &
       <Router>
         <Navigation accountSettings={accountSettings} />
         <Switch>
-          <Route path="*"><IFrameViews accountSettings={accountSettings} /></Route>
+          <Route path="*">
+            <IFrameViews accountSettings={accountSettings} />
+          </Route>
         </Switch>
       </Router>
       <IFrame id="root-iframe" src={iframeUrl} />

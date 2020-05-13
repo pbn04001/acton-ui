@@ -8,7 +8,6 @@ import AccountSettings from '../../interface/AccountSettings'
 
 export function* loadAccountSettings() {
   try {
-    console.log('Load Account')
     const accountSettings: AccountSettings = yield call(accountServices.getAccountSettings)
     yield put(
       loadAccountActions.receive({
